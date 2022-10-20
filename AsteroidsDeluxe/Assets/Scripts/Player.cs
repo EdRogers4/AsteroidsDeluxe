@@ -73,7 +73,6 @@ public class Player : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Space))
         {
             _isShoot = false;
-            StopCoroutine(ShootLaser());
         }
         
         if (Input.GetKeyDown(KeyCode.LeftShift))

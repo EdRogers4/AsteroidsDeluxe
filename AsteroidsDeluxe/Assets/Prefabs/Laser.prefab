@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5613700720782366816}
   - component: {fileID: 5613700720782366819}
   - component: {fileID: -2803919473079753903}
+  - component: {fileID: 8583742939392339815}
   m_Layer: 6
   m_Name: Laser
   m_TagString: Laser
@@ -128,6 +129,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptPlayer: {fileID: 0}
+--- !u!114 &8583742939392339815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5613700720782366818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13abc00054f091d48a927fb1162d815d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _screenTop: 14.25
+  _screenBottom: -14.25
+  _screenLeft: -25.5
+  _screenRight: 25.5
 --- !u!1001 &1988084158805214905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143,9 +160,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1098759949902988, guid: 23c35bb40b4c7ad40b6ffde697ffe612, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1206106961588728, guid: 23c35bb40b4c7ad40b6ffde697ffe612, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206106961588728, guid: 23c35bb40b4c7ad40b6ffde697ffe612, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1623239812574280, guid: 23c35bb40b4c7ad40b6ffde697ffe612, type: 3}
       propertyPath: m_Layer
@@ -154,6 +179,10 @@ PrefabInstance:
     - target: {fileID: 1781283225105226, guid: 23c35bb40b4c7ad40b6ffde697ffe612, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1781283225105226, guid: 23c35bb40b4c7ad40b6ffde697ffe612, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4493113448947602, guid: 23c35bb40b4c7ad40b6ffde697ffe612, type: 3}
       propertyPath: m_RootOrder
@@ -211,8 +240,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 198928329428940380, guid: 23c35bb40b4c7ad40b6ffde697ffe612, type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 199174227239556738, guid: 23c35bb40b4c7ad40b6ffde697ffe612, type: 3}
       propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199266920127582706, guid: 23c35bb40b4c7ad40b6ffde697ffe612, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 199266920127582706, guid: 23c35bb40b4c7ad40b6ffde697ffe612, type: 3}
