@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody _rigidBody;
+    [SerializeField] private Vector3 _playerPosition;
     [SerializeField] private float _speedThrust;
     [SerializeField] private float _speedThrustMin;
     [SerializeField] private float _speedThrustMax;
@@ -14,8 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isTurnLeft;
     [SerializeField] private bool _isTurnRight;
     [SerializeField] private bool _isShield;
-
-
+    
     private void Start()
     {
         _rigidBody = gameObject.GetComponent<Rigidbody>();
@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        _playerPosition = gameObject.transform.position;
+        
         if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
         {
             _isThrust = true;

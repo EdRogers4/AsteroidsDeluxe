@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 1124333068}
   - component: {fileID: 1124333073}
   - component: {fileID: 1124333072}
+  - component: {fileID: 1124333074}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -311,6 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcbbea09a48fb5144a9fb237368cfe4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerPosition: {x: 0, y: 0, z: 0}
   _speedThrust: 1
   _speedThrustMin: 1
   _speedThrustMax: 10
@@ -336,6 +338,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &1124333074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124333067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13abc00054f091d48a927fb1162d815d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _screenTop: 14.25
+  _screenBottom: -14.25
+  _screenLeft: -25.5
+  _screenRight: 25.5
 --- !u!1 &1733401128
 GameObject:
   m_ObjectHideFlags: 0
