@@ -5,16 +5,22 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody _rigidBody;
-    [SerializeField] private Vector3 _playerPosition;
+    [SerializeField] private Transform _gunBarrel;
+    [SerializeField] private GameObject _prefabLaser;
+    public List<Transform> listLaser;
     [SerializeField] private float _speedThrust;
     [SerializeField] private float _speedThrustMin;
     [SerializeField] private float _speedThrustMax;
     [SerializeField] private float _speedThrustMod;
     [SerializeField] private float _speedTurn;
+    [SerializeField] private float _speedLaser;
+    [SerializeField] private float _fireRate;
     [SerializeField] private bool _isThrust;
     [SerializeField] private bool _isTurnLeft;
     [SerializeField] private bool _isTurnRight;
+    [SerializeField] private bool _isShoot;
     [SerializeField] private bool _isShield;
+    private bool _isReload;
     
     private void Start()
     {
@@ -28,8 +34,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        _playerPosition = gameObject.transform.position;
-        
         if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
         {
             _isThrust = true;
@@ -60,16 +64,25 @@ public class Player : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Shoot");
+            if (!_isShoot)
+            {
+                _isShoot = true;
+                StartCoroutine(ShootLaser());
+            }
+        }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            _isShoot = false;
+            StopCoroutine(ShootLaser());
         }
         
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            Debug.Log("Shield");
+            _isShield = true;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            
+            _isShield = false;
         }
         
         if (_isTurnLeft && !_isTurnRight)
@@ -84,13 +97,37 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_isThrust) return;
-        
-        _rigidBody.velocity = transform.forward * _speedThrust;
-
-        if (_speedThrust < _speedThrustMax)
+        if (_isThrust)
         {
-            _speedThrust += (_speedThrust * _speedThrustMod);
+            _rigidBody.velocity = transform.forward * _speedThrust;
+
+            if (_speedThrust < _speedThrustMax)
+            {
+                _speedThrust += (_speedThrust * _speedThrustMod);
+            }
+        }
+
+        if (listLaser.Count > 0)
+        {
+            for (int i = 0; i < listLaser.Count; i++)
+            {
+                var step =  _speedLaser * Time.deltaTime;
+                listLaser[i].position = Vector3.MoveTowards(listLaser[i].position + listLaser[i].up, listLaser[i].position, step);
+            }
+        }
+    }
+
+    private IEnumerator ShootLaser()
+    {
+        if (_isShoot && !_isReload)
+        {
+            _isReload = true;
+            var newLaser = Instantiate(_prefabLaser, _gunBarrel.position, _gunBarrel.rotation);
+            newLaser.GetComponent<Laser>().scriptPlayer = this;
+            listLaser.Add(newLaser.transform);
+            yield return new WaitForSeconds(_fireRate);
+            _isReload = false;
+            StartCoroutine(ShootLaser());
         }
     }
 }
