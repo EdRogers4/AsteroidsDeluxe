@@ -56,34 +56,36 @@ public class Asteroid : MonoBehaviour
         var step =  _speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, step);
     }
-    
-    void OnCollisionEnter(Collision collision)
+
+    private void OnCollisionEnter(Collision collision)
     {
+        if (collision.transform.tag != "Laser" && collision.transform.tag != "Player") return;
+        
         if (collision.transform.tag == "Laser")
         {
             gameObject.GetComponent<SphereCollider>().enabled = false;
             collision.gameObject.GetComponent<Laser>().DestroyLaser();
-            
-            if (size == 0)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    var newAsteroid = Instantiate(_prefabAsteroidMedium, _spawnPoint[i].position, transform.rotation);
-                }
-            }
-            else if (size == 1)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    var newAsteroid = Instantiate(_prefabAsteroidSmall, _spawnPoint[i].position, transform.rotation);
-                }
-            }
-            else
-            {
-                
-            }
-            
-            Destroy(gameObject);
         }
+
+        if (size == 0)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                var newAsteroid = Instantiate(_prefabAsteroidMedium, _spawnPoint[i].position, transform.rotation);
+            }
+        }
+        else if (size == 1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                var newAsteroid = Instantiate(_prefabAsteroidSmall, _spawnPoint[i].position, transform.rotation);
+            }
+        }
+        else
+        {
+
+        }
+
+        Destroy(gameObject);
     }
 }

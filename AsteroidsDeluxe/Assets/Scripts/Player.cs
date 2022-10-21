@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    private Rigidbody _rigidBody;
+    public List<Transform> listLaser;
     [SerializeField] private Transform _gunBarrel;
     [SerializeField] private GameObject _prefabLaser;
-    public List<Transform> listLaser;
+    [SerializeField] private SphereCollider _collider;
+    [SerializeField] private MeshRenderer _renderer;
+    [SerializeField] private int _health;
+    [SerializeField] private Image _healthbar;
     [SerializeField] private float _speedThrust;
     [SerializeField] private float _speedThrustMin;
     [SerializeField] private float _speedThrustMax;
@@ -20,6 +24,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isTurnRight;
     [SerializeField] private bool _isShoot;
     [SerializeField] private bool _isShield;
+    private Rigidbody _rigidBody;
     private bool _isReload;
     
     private void Start()
@@ -127,6 +132,32 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(_fireRate);
             _isReload = false;
             StartCoroutine(ShootLaser());
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        switch (collision.transform.tag)
+        {
+            case "Small":
+                _health -= 15;
+                break;
+            case "Medium":
+                _health -= 25;
+                break;
+            case "Large":
+                _health -= 95;
+                break;
+        }
+
+        _healthbar.rectTransform.sizeDelta = new Vector2(((float) _health * 3f), 50f);
+        
+        if (_health < 0)
+        {
+            _health = 0;
+            _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+            _collider.enabled = false;
+            _renderer.enabled = false;
         }
     }
 }
