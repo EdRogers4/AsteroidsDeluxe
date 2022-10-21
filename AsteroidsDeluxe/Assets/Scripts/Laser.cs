@@ -8,12 +8,17 @@ public class Laser : MonoBehaviour
     
     private void Start()
     {
-        StartCoroutine(DestroyLaser());
+        StartCoroutine(DelayDestroyLaser());
     }
 
-    private IEnumerator DestroyLaser()
+    private IEnumerator DelayDestroyLaser()
     {
         yield return new WaitForSeconds(1.0f);
+        DestroyLaser();
+    }
+
+    public void DestroyLaser()
+    {
         scriptPlayer.listLaser.Remove(transform);
         Destroy(gameObject);
     }
