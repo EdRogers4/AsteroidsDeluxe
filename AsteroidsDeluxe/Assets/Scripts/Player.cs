@@ -11,7 +11,10 @@ public class Player : MonoBehaviour
     [SerializeField] private SphereCollider _collider;
     [SerializeField] private MeshRenderer _renderer;
     [SerializeField] private int _health;
-    [SerializeField] private Image _healthbar;
+    [SerializeField] private Image _healthBar;
+    [SerializeField] private Image _shieldBar;
+    [SerializeField] private float _shieldTime;
+    [SerializeField] private float _shieldDeavtivateTime;
     [SerializeField] private float _speedThrust;
     [SerializeField] private float _speedThrustMin;
     [SerializeField] private float _speedThrustMax;
@@ -24,6 +27,10 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isTurnRight;
     [SerializeField] private bool _isShoot;
     [SerializeField] private bool _isShield;
+    [SerializeField] private bool _isShieldActive;
+    [SerializeField] private bool _isShieldDeactivating;
+    [SerializeField] private ParticleSystem _particleShield;
+    [SerializeField] private ParticleSystem _particleAura;
     private Rigidbody _rigidBody;
     private bool _isReload;
     
@@ -39,11 +46,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
+        if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)) || (Input.GetMouseButtonDown(1)))
         {
             _isThrust = true;
         }
-        else if ((Input.GetKeyUp(KeyCode.W)) || (Input.GetKeyUp(KeyCode.UpArrow)))
+        else if ((Input.GetKeyUp(KeyCode.W)) || (Input.GetKeyUp(KeyCode.UpArrow)) || (Input.GetMouseButtonUp(1)))
         {
             _isThrust = false;
             _speedThrust = _speedThrustMin;
@@ -67,7 +74,7 @@ public class Player : MonoBehaviour
             _isTurnRight = false;
         }
         
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (((Input.GetKeyDown(KeyCode.Space)) || (Input.GetMouseButtonDown(0))) && _health > 0f)
         {
             if (!_isShoot)
             {
@@ -75,18 +82,22 @@ public class Player : MonoBehaviour
                 StartCoroutine(ShootLaser());
             }
         }
-        else if (Input.GetKeyUp(KeyCode.Space))
+        else if ((Input.GetKeyUp(KeyCode.Space)) || (Input.GetMouseButtonUp(0)))
         {
             _isShoot = false;
         }
         
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if ((Input.GetKeyDown(KeyCode.LeftShift)) && _shieldTime > 0f && _health > 0f)
         {
             _isShield = true;
+            _particleShield.Play();
+            _particleAura.Play();
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             _isShield = false;
+            _particleShield.Stop();
+            _particleAura.Stop();
         }
         
         if (_isTurnLeft && !_isTurnRight)
@@ -97,6 +108,31 @@ public class Player : MonoBehaviour
         {
             transform.RotateAround(transform.position, transform.up, Time.deltaTime * _speedTurn);
         }
+
+        if (_isShield && !_isShieldActive)
+        {
+            _isShieldActive = true;
+            _collider.radius = 1.0f;
+        }
+        else if (!_isShield && _isShieldActive && !_isShieldDeactivating)
+        {
+            _isShieldDeactivating = true;
+            StartCoroutine(DeactivateShield());
+        }
+
+        if (_isShield && _shieldTime > 0f)
+        {
+            _shieldTime -= Time.deltaTime;
+            _shieldBar.rectTransform.sizeDelta = new Vector2((_shieldTime * 25f), 25f);
+        }
+    }
+
+    private IEnumerator DeactivateShield()
+    {
+        yield return new WaitForSeconds(_shieldDeavtivateTime);
+        _collider.radius = 0.5f;
+        _isShieldDeactivating = false;
+        _isShieldActive = false;
     }
 
     private void FixedUpdate()
@@ -137,6 +173,8 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (_isShieldActive) return;
+        
         switch (collision.transform.tag)
         {
             case "Small":
@@ -150,8 +188,8 @@ public class Player : MonoBehaviour
                 break;
         }
 
-        _healthbar.rectTransform.sizeDelta = new Vector2(((float) _health * 3f), 50f);
-        
+        _healthBar.rectTransform.sizeDelta = new Vector2(((float) _health * 3f), 50f);
+
         if (_health < 0)
         {
             _health = 0;
