@@ -10,6 +10,7 @@ public class AnimationEvents : MonoBehaviour
     public void PlayerReady()
     {
         _scriptGameManager.NextLevel();
+        _scriptGameManager.SetLives(2);
         _scriptPlayer.PlayerStart();
     }
 

@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _prefabLaser;
     [SerializeField] private SphereCollider _collider;
     [SerializeField] private MeshRenderer _renderer;
+    [SerializeField] private int _lives;
     [SerializeField] private int _health;
     [SerializeField] private Image _healthBar;
     [SerializeField] private Image _shieldBar;
@@ -31,11 +32,11 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isShield;
     [SerializeField] private bool _isShieldActive;
     [SerializeField] private bool _isShieldDeactivating;
+    [SerializeField] private bool _isReload;
     [SerializeField] private ParticleSystem _particleShield;
     [SerializeField] private ParticleSystem _particleAura;
     private Rigidbody _rigidBody;
-    private bool _isReload;
-    
+
     private void Start()
     {
         _rigidBody = gameObject.GetComponent<Rigidbody>();
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour
         _isPlay = true;
         _renderer.enabled = true;
         _health = 100;
+        _lives = 2;
     }
 
     private void Update()
@@ -178,6 +180,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    private IEnumerator DelayRespawn()
+    {
+        yield return new WaitForSeconds(1.25f);
+        _health = 100;
+        transform.position = Vector3.zero;
+        _collider.enabled = true;
+        _renderer.enabled = true;
+        _isPlay = true;
+        _scriptGameManager.SetLives(_lives);
+        _healthBar.rectTransform.sizeDelta = new Vector2(((float) _health * 3f), 50f);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (_isShieldActive) return;
@@ -199,12 +213,24 @@ public class Player : MonoBehaviour
 
         if (_health < 0)
         {
-            _health = 0;
+            _lives -= 1;
             _isPlay = false;
-            _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+            _isThrust = false;
+            _isTurnLeft = false;
+            _isTurnRight = false;
+            _isShoot = false;
+            _isShield = false;
             _collider.enabled = false;
             _renderer.enabled = false;
-            _scriptGameManager.GameOver();
+            
+            if (_lives <= -1)
+            {
+                _scriptGameManager.GameOver();
+            }
+            else
+            {
+                StartCoroutine(DelayRespawn());
+            }
         }
     }
 }

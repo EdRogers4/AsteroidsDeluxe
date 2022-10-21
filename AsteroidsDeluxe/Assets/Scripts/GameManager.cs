@@ -67,6 +67,14 @@ public class GameManager : MonoBehaviour
         _animatorStartScreen.SetBool("isStart", true);
         _animatorStartScreen.SetBool("isGameOver", false);
     }
+
+    public void SetLives(int lives)
+    {
+        for (int i = 0; i < _listLifeIcons.Count; i++)
+        {
+            _listLifeIcons[i].enabled = i < lives;
+        }
+    }
     
     private void Update()
     {
