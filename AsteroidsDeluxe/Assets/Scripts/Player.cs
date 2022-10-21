@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public List<Transform> listLaser;
+    [SerializeField] private GameManager _scriptGameManager;
     [SerializeField] private Transform _gunBarrel;
     [SerializeField] private GameObject _prefabLaser;
     [SerializeField] private SphereCollider _collider;
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
     {
         _isPlay = true;
         _renderer.enabled = true;
+        _health = 100;
     }
 
     private void Update()
@@ -198,9 +200,11 @@ public class Player : MonoBehaviour
         if (_health < 0)
         {
             _health = 0;
+            _isPlay = false;
             _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
             _collider.enabled = false;
             _renderer.enabled = false;
+            _scriptGameManager.GameOver();
         }
     }
 }

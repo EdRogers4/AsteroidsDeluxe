@@ -43,6 +43,30 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    public void GameOver()
+    {
+        _animatorStartScreen.SetBool("isGameOver", true);
+        _animatorStartScreen.SetBool("isStart", false);
+    }
+
+    public void ResetStartButton()
+    {
+        for (int i = 0; i < listEnemies.Count; i++)
+        {
+            Destroy(listEnemies[i]);
+        }
+        
+        listEnemies.Clear();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void StartButton()
+    {
+        _isStartGame = true;
+        _animatorStartScreen.SetBool("isStart", true);
+        _animatorStartScreen.SetBool("isGameOver", false);
+    }
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.O))
@@ -52,8 +76,7 @@ public class GameManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Return) && !_isStartGame)
         {
-            _isStartGame = true;
-            _animatorStartScreen.SetBool("isStart", true);
+            StartButton();
         }
     }
 

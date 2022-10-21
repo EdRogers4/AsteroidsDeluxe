@@ -12,4 +12,9 @@ public class AnimationEvents : MonoBehaviour
         _scriptGameManager.NextLevel();
         _scriptPlayer.PlayerStart();
     }
+
+    public void ResetStartButton()
+    {
+        _scriptGameManager.ResetStartButton();
+    }
 }
