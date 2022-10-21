@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    public int size;
     public int startingAxis;
+    public GameManager scriptGameManager;
     [SerializeField] private Transform[] _spawnPoint;
     [SerializeField] private GameObject _prefabAsteroidMedium;
     [SerializeField] private GameObject _prefabAsteroidSmall;
+    [SerializeField] private int _size;
     [SerializeField] private float _screenTop;
     [SerializeField] private float _screenBottom;
     [SerializeField] private float _screenLeft;
@@ -21,7 +22,7 @@ public class Asteroid : MonoBehaviour
     {
         _startingTarget = new Vector3(Random.Range(_screenLeft, _screenRight), 0f, Random.Range(_screenTop, _screenBottom));
 
-        if (size == 0)
+        if (_size == 0)
         {
             switch (startingAxis)
             {
@@ -67,25 +68,36 @@ public class Asteroid : MonoBehaviour
             collision.gameObject.GetComponent<Laser>().DestroyLaser();
         }
 
-        if (size == 0)
+        if (_size == 0)
         {
             for (int i = 0; i < 3; i++)
             {
                 var newAsteroid = Instantiate(_prefabAsteroidMedium, _spawnPoint[i].position, transform.rotation);
+                scriptGameManager.listEnemies.Add(newAsteroid);
+                var scriptAsteroid = newAsteroid.GetComponent<Asteroid>();
+                scriptAsteroid.scriptGameManager = scriptGameManager;
             }
+            
+            scriptGameManager.UpdateScore(20);
         }
-        else if (size == 1)
+        else if (_size == 1)
         {
             for (int i = 0; i < 3; i++)
             {
                 var newAsteroid = Instantiate(_prefabAsteroidSmall, _spawnPoint[i].position, transform.rotation);
+                scriptGameManager.listEnemies.Add(newAsteroid);
+                var scriptAsteroid = newAsteroid.GetComponent<Asteroid>();
+                scriptAsteroid.scriptGameManager = scriptGameManager;
             }
+            
+            scriptGameManager.UpdateScore(50);
         }
         else
         {
-
+            scriptGameManager.UpdateScore(100);
         }
 
+        scriptGameManager.RemoveEnemy(gameObject);
         Destroy(gameObject);
     }
 }

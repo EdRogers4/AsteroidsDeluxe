@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speedTurn;
     [SerializeField] private float _speedLaser;
     [SerializeField] private float _fireRate;
+    [SerializeField] private bool _isPlay;
     [SerializeField] private bool _isThrust;
     [SerializeField] private bool _isTurnLeft;
     [SerializeField] private bool _isTurnRight;
@@ -37,69 +38,73 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _rigidBody = gameObject.GetComponent<Rigidbody>();
+    }
 
-        if (_speedThrust > _speedThrustMin || _speedThrust < _speedThrustMin)
-        {
-            _speedThrust = _speedThrustMin;
-        }
+    public void PlayerStart()
+    {
+        _isPlay = true;
+        _renderer.enabled = true;
     }
 
     private void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)) || (Input.GetMouseButtonDown(1)))
+        if (_isPlay)
         {
-            _isThrust = true;
-        }
-        else if ((Input.GetKeyUp(KeyCode.W)) || (Input.GetKeyUp(KeyCode.UpArrow)) || (Input.GetMouseButtonUp(1)))
-        {
-            _isThrust = false;
-            _speedThrust = _speedThrustMin;
-        }
-        
-        if ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
-        {
-            _isTurnLeft = true;
-        }
-        else if ((Input.GetKeyUp(KeyCode.A)) || (Input.GetKeyUp(KeyCode.LeftArrow)))
-        {
-            _isTurnLeft = false;
-        }
-        
-        if ((Input.GetKeyDown(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
-        {
-            _isTurnRight = true;
-        }
-        else if ((Input.GetKeyUp(KeyCode.D)) || (Input.GetKeyUp(KeyCode.RightArrow)))
-        {
-            _isTurnRight = false;
-        }
-        
-        if (((Input.GetKeyDown(KeyCode.Space)) || (Input.GetMouseButtonDown(0))) && _health > 0f)
-        {
-            if (!_isShoot)
+            if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)) || (Input.GetMouseButtonDown(1)))
             {
-                _isShoot = true;
-                StartCoroutine(ShootLaser());
+                _isThrust = true;
+            }
+            else if ((Input.GetKeyUp(KeyCode.W)) || (Input.GetKeyUp(KeyCode.UpArrow)) || (Input.GetMouseButtonUp(1)))
+            {
+                _isThrust = false;
+                _speedThrust = _speedThrustMin;
+            }
+
+            if ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
+            {
+                _isTurnLeft = true;
+            }
+            else if ((Input.GetKeyUp(KeyCode.A)) || (Input.GetKeyUp(KeyCode.LeftArrow)))
+            {
+                _isTurnLeft = false;
+            }
+
+            if ((Input.GetKeyDown(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
+            {
+                _isTurnRight = true;
+            }
+            else if ((Input.GetKeyUp(KeyCode.D)) || (Input.GetKeyUp(KeyCode.RightArrow)))
+            {
+                _isTurnRight = false;
+            }
+
+            if (((Input.GetKeyDown(KeyCode.Space)) || (Input.GetMouseButtonDown(0))) && _health > 0f)
+            {
+                if (!_isShoot)
+                {
+                    _isShoot = true;
+                    StartCoroutine(ShootLaser());
+                }
+            }
+            else if ((Input.GetKeyUp(KeyCode.Space)) || (Input.GetMouseButtonUp(0)))
+            {
+                _isShoot = false;
+            }
+
+            if ((Input.GetKeyDown(KeyCode.LeftShift)) && _shieldTime > 0f && _health > 0f)
+            {
+                _isShield = true;
+                _particleShield.Play();
+                _particleAura.Play();
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                _isShield = false;
+                _particleShield.Stop();
+                _particleAura.Stop();
             }
         }
-        else if ((Input.GetKeyUp(KeyCode.Space)) || (Input.GetMouseButtonUp(0)))
-        {
-            _isShoot = false;
-        }
-        
-        if ((Input.GetKeyDown(KeyCode.LeftShift)) && _shieldTime > 0f && _health > 0f)
-        {
-            _isShield = true;
-            _particleShield.Play();
-            _particleAura.Play();
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            _isShield = false;
-            _particleShield.Stop();
-            _particleAura.Stop();
-        }
-        
+
         if (_isTurnLeft && !_isTurnRight)
         {
             transform.RotateAround(transform.position, transform.up, Time.deltaTime * -_speedTurn);

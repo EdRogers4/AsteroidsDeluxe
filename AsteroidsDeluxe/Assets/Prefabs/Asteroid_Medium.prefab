@@ -225,14 +225,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3190245cf646548bec45133b939ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 1
   startingAxis: 0
+  scriptGameManager: {fileID: 0}
   _spawnPoint:
   - {fileID: 7612002040843237190}
   - {fileID: 3048115513223887798}
   - {fileID: 554485128257361140}
   _prefabAsteroidMedium: {fileID: 2573066722123323592}
   _prefabAsteroidSmall: {fileID: 6518339404808350213, guid: 7c3ea4f2d4e1cc44c8825f175c2fe5bc, type: 3}
+  _size: 1
   _screenTop: 14.25
   _screenBottom: -14.25
   _screenLeft: -25.5
