@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> listEnemies;
+    [SerializeField] private List<Image> _listLifeIcons;
     [SerializeField] private Animator _animatorStartScreen;
     [SerializeField] private int _asteroidsToSpawn;
     [SerializeField] private GameObject _prefabAsteroidLarge;
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour
 
         if (listEnemies.Count <= 0)
         {
-            
+            NextLevel();
         }
     }
     
