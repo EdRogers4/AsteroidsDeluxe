@@ -100,6 +100,11 @@ public class GameManager : MonoBehaviour
         {
             StartButton();
         }
+        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public void UpdateScore(int points)
