@@ -5,6 +5,8 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     public Player scriptPlayer;
+    public Drone scriptDrone;
+    [SerializeField] private bool _isEnemy;
     
     private void Start()
     {
@@ -13,13 +15,29 @@ public class Laser : MonoBehaviour
 
     private IEnumerator DelayDestroyLaser()
     {
-        yield return new WaitForSeconds(1.0f);
+        if (!_isEnemy)
+        {
+            yield return new WaitForSeconds(1.0f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(5.0f);
+        }
+
         DestroyLaser();
     }
 
     public void DestroyLaser()
     {
-        scriptPlayer.listLaser.Remove(transform);
+        if (!_isEnemy)
+        {
+            scriptPlayer.listLaser.Remove(transform);
+        }
+        else
+        {
+            scriptDrone.listLaser.Remove(transform);
+        }
+
         Destroy(gameObject);
     }
 }

@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     [SerializeField] private ParticleSystem _particleShield;
     [SerializeField] private ParticleSystem _particleAura;
     [SerializeField] private ParticleSystem _particleExplosion;
+    [SerializeField] private ParticleSystem _particleMuzzle;
     private Rigidbody _rigidBody;
 
     private void Start()
@@ -193,6 +194,7 @@ public class Player : MonoBehaviour
             var newLaser = Instantiate(_prefabLaser, _gunBarrel.position, _gunBarrel.rotation);
             newLaser.GetComponent<Laser>().scriptPlayer = this;
             listLaser.Add(newLaser.transform);
+            _particleMuzzle.Play();
             yield return new WaitForSeconds(_fireRate);
             _isReload = false;
             StartCoroutine(ShootLaser());
@@ -213,6 +215,12 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.transform.tag == "Laser")
+        {
+            gameObject.GetComponent<SphereCollider>().enabled = false;
+            collision.gameObject.GetComponent<Laser>().DestroyLaser();
+        }
+        
         if (_isShieldActive) return;
         
         switch (collision.transform.tag)
@@ -225,6 +233,9 @@ public class Player : MonoBehaviour
                 break;
             case "Large":
                 _health -= 95;
+                break;
+            case "Laser":
+                _health -= 10;
                 break;
         }
 

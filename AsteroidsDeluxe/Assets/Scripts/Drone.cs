@@ -7,20 +7,29 @@ public class Drone : MonoBehaviour
     public GameManager scriptGameManager;
     public Transform target;
     public bool isMoveRight;
+    public List<Transform> listLaser;
     [SerializeField] private ScreenWrap _scriptScreenWrap;
+    [SerializeField] private Transform _barrel;
+    [SerializeField] private GameObject _prefabLaser;
     [SerializeField] private ParticleSystem _particleExplosion;
     [SerializeField] private float _speedTurn;
     [SerializeField] private float _speedMove;
+    [SerializeField] private float _speedLaser;
     [SerializeField] private float _strafeFrequencyMin;
     [SerializeField] private float _strafeFrequencyMax;
     [SerializeField] private float _strafeDistanceMin;
     [SerializeField] private float _strafeDistanceMax;
+    [SerializeField] private float _fireRateMin;
+    [SerializeField] private float _fireRateMax;
+    [SerializeField] private float _fireRateBurst;
+    [SerializeField] private int _roundsPerBurst;
     [SerializeField] private bool _isStrafe;
     [SerializeField] private bool _isStrafeUp;
 
     private void Start()
     {
         StartCoroutine(StrafeVertically());
+        StartCoroutine(FireLaser());
     }
     
     private void Update()
@@ -51,6 +60,15 @@ public class Drone : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.back, step);
             }
         }
+        
+        if (listLaser.Count > 0)
+        {
+            for (int i = 0; i < listLaser.Count; i++)
+            {
+                var velocity =  _speedLaser * Time.deltaTime;
+                listLaser[i].position = Vector3.MoveTowards(listLaser[i].position, listLaser[i].position + listLaser[i].up, velocity);
+            }
+        }
     }
 
     private IEnumerator StrafeVertically()
@@ -61,6 +79,21 @@ public class Drone : MonoBehaviour
         _isStrafeUp = directionIndex != 0;
         yield return new WaitForSeconds(Random.Range(_strafeDistanceMin, _strafeDistanceMax));
         _isStrafe = false;
+    }
+
+    private IEnumerator FireLaser()
+    {
+        yield return new WaitForSeconds(Random.Range(_fireRateMin, _fireRateMax));
+
+        for (int i = 0; i < _roundsPerBurst; i++)
+        {
+            var newLaser = Instantiate(_prefabLaser, _barrel.position, _barrel.rotation);
+            listLaser.Add(newLaser.transform);
+            newLaser.GetComponent<Laser>().scriptDrone = this;
+            yield return new WaitForSeconds(_fireRateBurst);
+        }
+
+        StartCoroutine(FireLaser());
     }
 
     private void OnCollisionEnter(Collision collision)
