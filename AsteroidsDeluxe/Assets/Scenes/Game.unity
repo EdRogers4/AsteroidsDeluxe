@@ -1728,7 +1728,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1124333067}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 91cd0b0b64d9ded49a01ae4adb02c7bb, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1842,6 +1842,7 @@ MonoBehaviour:
   _isShieldActive: 0
   _isShieldDeactivating: 0
   _isReload: 0
+  _isBounce: 0
   _particleShield: {fileID: 2056354193}
   _particleAura: {fileID: 388898047}
 --- !u!54 &1124333073

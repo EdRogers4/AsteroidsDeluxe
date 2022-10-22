@@ -9,6 +9,7 @@ TagManager:
   - Large
   - Medium
   - Small
+  - Shield
   layers:
   - Default
   - TransparentFX

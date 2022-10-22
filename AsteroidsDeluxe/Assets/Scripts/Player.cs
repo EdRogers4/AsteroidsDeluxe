@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isShieldActive;
     [SerializeField] private bool _isShieldDeactivating;
     [SerializeField] private bool _isReload;
+    [SerializeField] private bool _isBounce;
     [SerializeField] private ParticleSystem _particleShield;
     [SerializeField] private ParticleSystem _particleAura;
     private Rigidbody _rigidBody;
@@ -122,6 +123,7 @@ public class Player : MonoBehaviour
         {
             _isShieldActive = true;
             _collider.radius = 1.0f;
+            transform.tag = "Shield";
         }
         else if (!_isShield && _isShieldActive && !_isShieldDeactivating)
         {
@@ -143,18 +145,10 @@ public class Player : MonoBehaviour
             StartCoroutine(DeactivateShield());
         }
     }
-
-    private IEnumerator DeactivateShield()
-    {
-        yield return new WaitForSeconds(_shieldDeavtivateTime);
-        _collider.radius = 0.5f;
-        _isShieldDeactivating = false;
-        _isShieldActive = false;
-    }
-
+    
     private void FixedUpdate()
     {
-        if (_isThrust)
+        if (_isThrust && !_isBounce)
         {
             _rigidBody.velocity = transform.forward * _speedThrust;
 
@@ -172,6 +166,22 @@ public class Player : MonoBehaviour
                 listLaser[i].position = Vector3.MoveTowards(listLaser[i].position + listLaser[i].up, listLaser[i].position, step);
             }
         }
+    }
+
+    public IEnumerator BounceOffAsteroid()
+    {
+        _isBounce = true;
+        yield return new WaitForSeconds(0.25f);
+        _isBounce = false;
+    }
+    
+    private IEnumerator DeactivateShield()
+    {
+        yield return new WaitForSeconds(_shieldDeavtivateTime);
+        _collider.radius = 0.5f;
+        _isShieldDeactivating = false;
+        _isShieldActive = false;
+        transform.tag = "Player";
     }
 
     private IEnumerator ShootLaser()
@@ -219,7 +229,7 @@ public class Player : MonoBehaviour
 
         _healthBar.rectTransform.sizeDelta = new Vector2(((float) _health * 3f), 50f);
 
-        if (_health < 0)
+        if (_health <= 0)
         {
             _lives -= 1;
             _isPlay = false;

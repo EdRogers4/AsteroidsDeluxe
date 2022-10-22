@@ -60,6 +60,11 @@ public class Asteroid : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.transform.tag == "Shield")
+        {
+            StartCoroutine(collision.gameObject.GetComponent<Player>().BounceOffAsteroid());
+        }
+        
         if (collision.transform.tag != "Laser" && collision.transform.tag != "Player") return;
         
         if (collision.transform.tag == "Laser")

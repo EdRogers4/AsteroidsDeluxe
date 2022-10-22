@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Drone : MonoBehaviour
 {
+    public GameManager scriptGameManager;
     public Transform target;
+    public bool isMoveRight;
     [SerializeField] private float _speedMove;
-    [SerializeField] private bool _isMoveRight;
-    
+
     private void Start()
     {
         
@@ -16,19 +17,29 @@ public class Drone : MonoBehaviour
     private void Update()
     {
         transform.LookAt(target);
-    }
-
-    private void FixedUpdate()
-    {
         var step =  _speedMove * Time.deltaTime;
         
-        if (_isMoveRight)
+        if (isMoveRight)
         {
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right, step);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.left, step);
         }
         else
         {
-            transform.Translate(-Vector3.left * _speedMove * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right, step);
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Shield") return;
+        
+        if (collision.transform.tag == "Laser")
+        {
+            gameObject.GetComponent<SphereCollider>().enabled = false;
+            collision.gameObject.GetComponent<Laser>().DestroyLaser();
+        }
+        
+        scriptGameManager.RemoveEnemy(gameObject);
+        Destroy(gameObject);
     }
 }

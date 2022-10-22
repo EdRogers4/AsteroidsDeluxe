@@ -66,10 +66,13 @@ public class GameManager : MonoBehaviour
 
     public void StartButton()
     {
-        _isStartGame = true;
-        _animatorStartScreen.SetBool("isStart", true);
-        _animatorStartScreen.SetBool("isGameOver", false);
-        StartCoroutine(SpawnDrone());
+        if (!_isStartGame)
+        {
+            _isStartGame = true;
+            _animatorStartScreen.SetBool("isStart", true);
+            _animatorStartScreen.SetBool("isGameOver", false);
+            StartCoroutine(SpawnDrone());
+        }
     }
 
     public void SetLives(int lives)
@@ -111,8 +114,13 @@ public class GameManager : MonoBehaviour
     private IEnumerator SpawnDrone()
     {
         yield return new WaitForSeconds(1.0f);
-        var spawnPoint = Random.Range(0, (_listSpawnPoints.Count - 1));
+        var spawnPoint = Random.Range(0, (_listSpawnPoints.Count));
         var newDrone = Instantiate(_prefabDrone, _listSpawnPoints[spawnPoint].position, Quaternion.identity);
-        newDrone.GetComponent<Drone>().target = _scriptPlayer.transform;
+        listEnemies.Add(newDrone);
+        var scriptDrone = newDrone.GetComponent<Drone>();
+        scriptDrone.scriptGameManager = this;
+        scriptDrone.target = _scriptPlayer.transform;
+        scriptDrone.isMoveRight = spawnPoint < _listSpawnPoints.Count / 2;
+            ;
     }
 }
