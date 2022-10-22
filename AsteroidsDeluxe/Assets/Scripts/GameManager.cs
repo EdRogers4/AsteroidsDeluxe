@@ -7,10 +7,13 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> listEnemies;
+    [SerializeField] private Player _scriptPlayer;
     [SerializeField] private List<Image> _listLifeIcons;
+    [SerializeField] private List<Transform> _listSpawnPoints;
     [SerializeField] private Animator _animatorStartScreen;
     [SerializeField] private int _asteroidsToSpawn;
     [SerializeField] private GameObject _prefabAsteroidLarge;
+    [SerializeField] private GameObject _prefabDrone;
     [SerializeField] private Text _textScore;
     private int _score;
     private int _formatScoreCount;
@@ -66,6 +69,7 @@ public class GameManager : MonoBehaviour
         _isStartGame = true;
         _animatorStartScreen.SetBool("isStart", true);
         _animatorStartScreen.SetBool("isGameOver", false);
+        StartCoroutine(SpawnDrone());
     }
 
     public void SetLives(int lives)
@@ -102,5 +106,13 @@ public class GameManager : MonoBehaviour
         }
 
         _textScore.text += "" + _score;
+    }
+
+    private IEnumerator SpawnDrone()
+    {
+        yield return new WaitForSeconds(1.0f);
+        var spawnPoint = Random.Range(0, (_listSpawnPoints.Count - 1));
+        var newDrone = Instantiate(_prefabDrone, _listSpawnPoints[spawnPoint].position, Quaternion.identity);
+        newDrone.GetComponent<Drone>().target = _scriptPlayer.transform;
     }
 }

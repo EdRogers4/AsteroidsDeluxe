@@ -95,13 +95,13 @@ public class Player : MonoBehaviour
                 _isShoot = false;
             }
 
-            if ((Input.GetKeyDown(KeyCode.LeftShift)) && _shieldTime > 0f && _health > 0f)
+            if (((Input.GetKeyDown(KeyCode.LeftShift)) || (Input.GetMouseButtonDown(2))) && _shieldTime > 0f && _health > 0f)
             {
                 _isShield = true;
                 _particleShield.Play();
                 _particleAura.Play();
             }
-            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            else if ((Input.GetKeyUp(KeyCode.LeftShift)) || (Input.GetMouseButtonUp(2)))
             {
                 _isShield = false;
                 _particleShield.Stop();
@@ -133,6 +133,14 @@ public class Player : MonoBehaviour
         {
             _shieldTime -= Time.deltaTime;
             _shieldBar.rectTransform.sizeDelta = new Vector2((_shieldTime * 25f), 25f);
+        }
+        else if (_isShield && _shieldTime <= 0)
+        {
+            _isShield = false;
+            _particleShield.Stop();
+            _particleAura.Stop();
+            _isShieldDeactivating = true;
+            StartCoroutine(DeactivateShield());
         }
     }
 
