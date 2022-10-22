@@ -10,6 +10,7 @@ TagManager:
   - Medium
   - Small
   - Shield
+  - Screen
   layers:
   - Default
   - TransparentFX

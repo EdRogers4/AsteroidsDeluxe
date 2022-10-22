@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isBounce;
     [SerializeField] private ParticleSystem _particleShield;
     [SerializeField] private ParticleSystem _particleAura;
+    [SerializeField] private ParticleSystem _particleExplosion;
     private Rigidbody _rigidBody;
 
     private void Start()
@@ -200,8 +201,8 @@ public class Player : MonoBehaviour
 
     private IEnumerator DelayRespawn()
     {
-        yield return new WaitForSeconds(1.25f);
         _health = 100;
+        yield return new WaitForSeconds(1.25f);
         transform.position = Vector3.zero;
         _collider.enabled = true;
         _renderer.enabled = true;
@@ -240,6 +241,7 @@ public class Player : MonoBehaviour
             _isShield = false;
             _collider.enabled = false;
             _renderer.enabled = false;
+            Instantiate(_particleExplosion, transform.position, transform.rotation);
             
             if (_lives <= -1)
             {

@@ -140,6 +140,7 @@ MonoBehaviour:
   _speed: 5
   _startingPosition: {x: 0, y: 0, z: 0}
   _startingTarget: {x: 0, y: 0, z: 0}
+  _particleSmoke: {fileID: 198595972869621808, guid: bbdffbb5bb33e0942a03dd0c4a2b87f4, type: 3}
 --- !u!114 &6518339404808350330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +157,8 @@ MonoBehaviour:
   _screenBottom: -15.25
   _screenLeft: -26.5
   _screenRight: 26.5
+  _isEnterOffScreen: 0
+  isEnter: 0
 --- !u!1001 &6518339404329724275
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 8197828081959250992}
   - component: {fileID: 7042482830924079267}
   - component: {fileID: 8197828081959250996}
+  - component: {fileID: 4078450659763275877}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Enemy
@@ -223,7 +224,34 @@ MonoBehaviour:
   scriptGameManager: {fileID: 0}
   target: {fileID: 0}
   isMoveRight: 0
+  _scriptScreenWrap: {fileID: 4078450659763275877}
+  _particleExplosion: {fileID: 198665507610156730, guid: 156b5155cd2b0e3469377bac36f848e8, type: 3}
+  _speedTurn: 35
   _speedMove: 2.5
+  _strafeFrequencyMin: 3
+  _strafeFrequencyMax: 5
+  _strafeDistanceMin: 2
+  _strafeDistanceMax: 3
+  _isStrafe: 0
+  _isStrafeUp: 0
+--- !u!114 &4078450659763275877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8197828081959250993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13abc00054f091d48a927fb1162d815d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _screenTop: 14.25
+  _screenBottom: -14.25
+  _screenLeft: -25.5
+  _screenRight: 25.5
+  _isEnterOffScreen: 0
+  isEnter: 0
 --- !u!1001 &8197828081452685071
 PrefabInstance:
   m_ObjectHideFlags: 0

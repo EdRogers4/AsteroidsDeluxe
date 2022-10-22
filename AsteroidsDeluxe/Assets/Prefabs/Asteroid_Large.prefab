@@ -336,6 +336,7 @@ MonoBehaviour:
   _speed: 2
   _startingPosition: {x: 0, y: 0, z: 0}
   _startingTarget: {x: 0, y: 0, z: 0}
+  _particleSmoke: {fileID: 198595972869621808, guid: dffd731173883ee4eac389a207d3ef01, type: 3}
 --- !u!114 &2666307699087454737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +353,8 @@ MonoBehaviour:
   _screenBottom: -17.25
   _screenLeft: -28.5
   _screenRight: 28.5
+  _isEnterOffScreen: 0
+  isEnter: 0
 --- !u!1 &8557557158659445263
 GameObject:
   m_ObjectHideFlags: 0

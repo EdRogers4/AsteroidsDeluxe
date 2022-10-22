@@ -17,6 +17,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private Vector3 _startingPosition;
     [SerializeField] private Vector3 _startingTarget;
+    [SerializeField] private ParticleSystem _particleSmoke;
 
     private void Start()
     {
@@ -102,6 +103,7 @@ public class Asteroid : MonoBehaviour
             scriptGameManager.UpdateScore(100);
         }
 
+        Instantiate(_particleSmoke, transform.position, transform.rotation);
         scriptGameManager.RemoveEnemy(gameObject);
         Destroy(gameObject);
     }
