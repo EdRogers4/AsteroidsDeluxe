@@ -7,7 +7,10 @@ public class Drone : MonoBehaviour
     public GameManager scriptGameManager;
     public Transform target;
     public bool isMoveRight;
+    public bool isActive;
     public List<Transform> listLaser;
+    public SphereCollider collider;
+    public MeshRenderer renderer;
     [SerializeField] private ScreenWrap _scriptScreenWrap;
     [SerializeField] private Transform _barrel;
     [SerializeField] private GameObject _prefabLaser;
@@ -34,41 +37,48 @@ public class Drone : MonoBehaviour
     
     private void Update()
     {
-        Vector3 targetDirection = (target.position - transform.position).normalized;
-        var targetRotation = Quaternion.LookRotation(targetDirection);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation , Time.deltaTime * _speedTurn);
-        
-        var step =  _speedMove * Time.deltaTime;
-        
-        if (isMoveRight)
+        if (isActive)
         {
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.left, step);
-        }
-        else
-        {
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right, step);
-        }
+            Vector3 targetDirection = (target.position - transform.position).normalized;
+            var targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation =
+                Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * _speedTurn);
 
-        if (_isStrafe)
-        {
-            if (_isStrafeUp)
+            var step = _speedMove * Time.deltaTime;
+
+            if (isMoveRight)
             {
-                transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.forward, step);
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.left, step);
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.back, step);
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right, step);
+            }
+
+            if (_isStrafe)
+            {
+                if (_isStrafeUp)
+                {
+                    transform.position =
+                        Vector3.MoveTowards(transform.position, transform.position + Vector3.forward, step);
+                }
+                else
+                {
+                    transform.position =
+                        Vector3.MoveTowards(transform.position, transform.position + Vector3.back, step);
+                }
             }
         }
-        
+
         if (listLaser.Count > 0)
         {
             for (int i = 0; i < listLaser.Count; i++)
             {
-                var velocity =  _speedLaser * Time.deltaTime;
+                var velocity = _speedLaser * Time.deltaTime;
                 listLaser[i].position = Vector3.MoveTowards(listLaser[i].position, listLaser[i].position + listLaser[i].up, velocity);
             }
         }
+
     }
 
     private IEnumerator StrafeVertically()
@@ -79,18 +89,23 @@ public class Drone : MonoBehaviour
         _isStrafeUp = directionIndex != 0;
         yield return new WaitForSeconds(Random.Range(_strafeDistanceMin, _strafeDistanceMax));
         _isStrafe = false;
+        StartCoroutine(StrafeVertically());
     }
 
     private IEnumerator FireLaser()
     {
         yield return new WaitForSeconds(Random.Range(_fireRateMin, _fireRateMax));
 
-        for (int i = 0; i < _roundsPerBurst; i++)
+        if (isActive && !scriptGameManager.isGameOver)
         {
-            var newLaser = Instantiate(_prefabLaser, _barrel.position, _barrel.rotation);
-            listLaser.Add(newLaser.transform);
-            newLaser.GetComponent<Laser>().scriptDrone = this;
-            yield return new WaitForSeconds(_fireRateBurst);
+            for (int i = 0; i < _roundsPerBurst; i++)
+            {
+                if (!isActive) break;
+                var newLaser = Instantiate(_prefabLaser, _barrel.position, _barrel.rotation);
+                listLaser.Add(newLaser.transform);
+                newLaser.GetComponent<Laser>().scriptDrone = this;
+                yield return new WaitForSeconds(_fireRateBurst);
+            }
         }
 
         StartCoroutine(FireLaser());
@@ -98,21 +113,21 @@ public class Drone : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == "Shield" || collision.transform.tag == "Screen") return;
-        
-        if (collision.transform.tag == "Laser")
+        if (collision.transform.tag == "Player" || collision.transform.tag == "Laser")
         {
-            gameObject.GetComponent<SphereCollider>().enabled = false;
-            collision.gameObject.GetComponent<Laser>().DestroyLaser();
+
+            if (collision.transform.tag == "Laser")
+            {
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                collision.gameObject.GetComponent<Laser>().DestroyLaser();
+            }
+
+            Instantiate(_particleExplosion, transform.position, transform.rotation);
+            scriptGameManager.RemoveEnemy(gameObject);
+            collider.enabled = false;
+            renderer.enabled = false;
+            isActive = false;
+            StartCoroutine(scriptGameManager.SpawnDrone());
         }
-        
-        Instantiate(_particleExplosion, transform.position, transform.rotation);
-        scriptGameManager.RemoveEnemy(gameObject);
-        Destroy(gameObject);
-    }
-    
-    private void OnTriggerEnter(Collider other)
-    {
-        _scriptScreenWrap.isEnter = true;
     }
 }

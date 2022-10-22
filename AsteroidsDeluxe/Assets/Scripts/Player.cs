@@ -217,7 +217,6 @@ public class Player : MonoBehaviour
     {
         if (collision.transform.tag == "Laser")
         {
-            gameObject.GetComponent<SphereCollider>().enabled = false;
             collision.gameObject.GetComponent<Laser>().DestroyLaser();
         }
         
@@ -235,7 +234,7 @@ public class Player : MonoBehaviour
                 _health -= 95;
                 break;
             case "Laser":
-                _health -= 10;
+                _health -= 20;
                 break;
         }
 

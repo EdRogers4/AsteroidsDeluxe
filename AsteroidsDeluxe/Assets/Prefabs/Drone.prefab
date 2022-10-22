@@ -320,7 +320,10 @@ MonoBehaviour:
   scriptGameManager: {fileID: 0}
   target: {fileID: 0}
   isMoveRight: 0
+  isActive: 0
   listLaser: []
+  collider: {fileID: 8197828081959250992}
+  renderer: {fileID: 8184776953028870145}
   _scriptScreenWrap: {fileID: 4078450659763275877}
   _barrel: {fileID: 1593794848389536143}
   _prefabLaser: {fileID: 7504269177380544975, guid: d5705f448f0827a4695401b20326ba72, type: 3}
@@ -444,5 +447,10 @@ PrefabInstance:
 --- !u!4 &8202679303087238113 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4869088832863470, guid: b8462cc0fad2b284cb775e5fb7c2dd19, type: 3}
+  m_PrefabInstance: {fileID: 8197828081452685071}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8184776953028870145 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23259562486437646, guid: b8462cc0fad2b284cb775e5fb7c2dd19, type: 3}
   m_PrefabInstance: {fileID: 8197828081452685071}
   m_PrefabAsset: {fileID: 0}

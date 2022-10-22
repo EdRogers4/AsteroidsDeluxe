@@ -8,8 +8,7 @@ public class ScreenWrap : MonoBehaviour
     [SerializeField] private float _screenBottom;
     [SerializeField] private float _screenLeft;
     [SerializeField] private float _screenRight;
-    [SerializeField] private bool _isEnterOffScreen;
-    public bool isEnter;
+    [SerializeField] private bool _isDrone;
     private bool _isLaser;
 
     private void Start()
@@ -22,25 +21,22 @@ public class ScreenWrap : MonoBehaviour
     
     private void Update()
     {
-        if (!_isEnterOffScreen || (_isEnterOffScreen && isEnter))
+        if (transform.position.z > _screenTop)
         {
-            if (transform.position.z > _screenTop)
-            {
-                WrapPosition(new Vector3(transform.position.x, transform.position.y, _screenBottom));
-            }
-            else if (transform.position.z < _screenBottom)
-            {
-                WrapPosition(new Vector3(transform.position.x, transform.position.y, _screenTop));
-            }
+            WrapPosition(new Vector3(transform.position.x, transform.position.y, _screenBottom));
+        }
+        else if (transform.position.z < _screenBottom)
+        {
+            WrapPosition(new Vector3(transform.position.x, transform.position.y, _screenTop));
+        }
 
-            if (transform.position.x > _screenRight)
-            {
-                WrapPosition(new Vector3(_screenLeft, transform.position.y, transform.position.z));
-            }
-            else if (transform.position.x < _screenLeft)
-            {
-                WrapPosition(new Vector3(_screenRight, transform.position.y, transform.position.z));
-            }
+        if (transform.position.x > _screenRight)
+        {
+            WrapPosition(new Vector3(_screenLeft, transform.position.y, transform.position.z));
+        }
+        else if (transform.position.x < _screenLeft)
+        {
+            WrapPosition(new Vector3(_screenRight, transform.position.y, transform.position.z));
         }
     }
 

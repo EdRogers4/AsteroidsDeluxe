@@ -147,6 +147,7 @@ MonoBehaviour:
   _screenBottom: -14.25
   _screenLeft: -25.5
   _screenRight: 25.5
+  _isDrone: 0
   _isEnterOffScreen: 0
   isEnter: 0
 --- !u!1001 &7504269177171862597
@@ -160,13 +161,25 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1122939575973356, guid: d44b04f8d51c4c9468fee466ca4eaafa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1310173194709730, guid: d44b04f8d51c4c9468fee466ca4eaafa, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1310173194709730, guid: d44b04f8d51c4c9468fee466ca4eaafa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1390731622080738, guid: d44b04f8d51c4c9468fee466ca4eaafa, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390731622080738, guid: d44b04f8d51c4c9468fee466ca4eaafa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1975075621804630, guid: d44b04f8d51c4c9468fee466ca4eaafa, type: 3}
       propertyPath: m_Name
@@ -231,6 +244,18 @@ PrefabInstance:
     - target: {fileID: 4560649569687946, guid: d44b04f8d51c4c9468fee466ca4eaafa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198630879783121186, guid: d44b04f8d51c4c9468fee466ca4eaafa, type: 3}
+      propertyPath: lengthInSec
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 198764679088154796, guid: d44b04f8d51c4c9468fee466ca4eaafa, type: 3}
+      propertyPath: lengthInSec
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 198996233617312484, guid: d44b04f8d51c4c9468fee466ca4eaafa, type: 3}
+      propertyPath: lengthInSec
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 199142637335749946, guid: d44b04f8d51c4c9468fee466ca4eaafa, type: 3}
       propertyPath: m_Materials.Array.size

@@ -7,14 +7,18 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> listEnemies;
+    public bool isGameOver;
+    [SerializeField] private GameObject _drone;
+    [SerializeField] private Drone _scriptDrone;
     [SerializeField] private Player _scriptPlayer;
     [SerializeField] private List<Image> _listLifeIcons;
     [SerializeField] private List<Transform> _listSpawnPoints;
     [SerializeField] private Animator _animatorStartScreen;
     [SerializeField] private int _asteroidsToSpawn;
     [SerializeField] private GameObject _prefabAsteroidLarge;
-    [SerializeField] private GameObject _prefabDrone;
     [SerializeField] private Text _textScore;
+    [SerializeField] private float _respawnDroneMin;
+    [SerializeField] private float _respawnDroneMax;
     private int _score;
     private int _formatScoreCount;
     private int _formatScoreLength;
@@ -51,6 +55,7 @@ public class GameManager : MonoBehaviour
     {
         _animatorStartScreen.SetBool("isGameOver", true);
         _animatorStartScreen.SetBool("isStart", false);
+        isGameOver = true;
     }
 
     public void ResetStartButton()
@@ -71,6 +76,7 @@ public class GameManager : MonoBehaviour
             _isStartGame = true;
             _animatorStartScreen.SetBool("isStart", true);
             _animatorStartScreen.SetBool("isGameOver", false);
+            isGameOver = false;
             StartCoroutine(SpawnDrone());
         }
     }
@@ -111,16 +117,14 @@ public class GameManager : MonoBehaviour
         _textScore.text += "" + _score;
     }
 
-    private IEnumerator SpawnDrone()
+    public IEnumerator SpawnDrone()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(Random.Range(_respawnDroneMin, _respawnDroneMax));
         var spawnPoint = Random.Range(0, (_listSpawnPoints.Count));
-        var newDrone = Instantiate(_prefabDrone, _listSpawnPoints[spawnPoint].position, Quaternion.identity);
-        listEnemies.Add(newDrone);
-        var scriptDrone = newDrone.GetComponent<Drone>();
-        scriptDrone.scriptGameManager = this;
-        scriptDrone.target = _scriptPlayer.transform;
-        scriptDrone.isMoveRight = spawnPoint < _listSpawnPoints.Count / 2;
-            ;
+        _drone.transform.position = _listSpawnPoints[spawnPoint].position;
+        _scriptDrone.isMoveRight = spawnPoint < _listSpawnPoints.Count / 2;
+        _scriptDrone.collider.enabled = true;
+        _scriptDrone.renderer.enabled = true;
+        _scriptDrone.isActive = true;
     }
 }
