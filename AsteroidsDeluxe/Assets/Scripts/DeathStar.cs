@@ -6,6 +6,7 @@ public class DeathStar : MonoBehaviour
 {
     public int startingAxis;
     public GameManager scriptGameManager;
+    public Transform target;
     [SerializeField] private Transform[] _spawnPoint;
     [SerializeField] private GameObject _prefabDeathStarMedium;
     [SerializeField] private GameObject _prefabDeathStarSmall;
@@ -14,7 +15,9 @@ public class DeathStar : MonoBehaviour
     [SerializeField] private float _screenBottom;
     [SerializeField] private float _screenLeft;
     [SerializeField] private float _screenRight;
-    [SerializeField] private float _speed;
+    [SerializeField] private float _speedMove;
+    [SerializeField] private float _speedTurn;
+    [SerializeField] private bool _isHit;
     [SerializeField] private Vector3 _startingPosition;
     [SerializeField] private Vector3 _startingTarget;
     [SerializeField] private ParticleSystem _particleExplosionLarge;
@@ -51,14 +54,25 @@ public class DeathStar : MonoBehaviour
 
             transform.position = _startingPosition;
         }
-
+        
         transform.LookAt(_startingTarget);
     }
     
     private void Update()
     {
-        var step =  _speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, step);
+        var step =  _speedMove * Time.deltaTime;
+        
+        if (_size == 0)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, step);  
+        }
+        else
+        {
+            Vector3 targetDirection = (target.position - transform.position).normalized;
+            var targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * _speedTurn);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, step);
+        }
     }
     
     private void OnCollisionEnter(Collision collision)
@@ -72,53 +86,58 @@ public class DeathStar : MonoBehaviour
         
         if (collision.transform.tag == "Laser")
         {
-            switch (_size)
-            {
-                case 0:
-                    gameObject.GetComponent<SphereCollider>().enabled = false;
-                    break;
-                case 1:
-                    gameObject.GetComponent<CapsuleCollider>().enabled = false;
-                    break;
-                case 2:
-                    gameObject.GetComponent<BoxCollider>().enabled = false;
-                    break;
-            }
-
             collision.gameObject.GetComponent<Laser>().DestroyLaser();
         }
 
-        if (_size == 0)
+        if (!_isHit)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                var newEnemy = Instantiate(_prefabDeathStarMedium, _spawnPoint[i].position, _spawnPoint[i].rotation);
-                scriptGameManager.listEnemies.Add(newEnemy);
-                var scriptDeathStar = newEnemy.GetComponent<DeathStar>();
-                scriptDeathStar.scriptGameManager = scriptGameManager;
-            }
+            _isHit = true;
             
-            scriptGameManager.UpdateScore(20);
-        }
-        else if (_size == 1)
-        {
-            for (int i = 0; i < 2; i++)
+            if (_size == 0)
             {
-                var newEnemy = Instantiate(_prefabDeathStarSmall, _spawnPoint[i].position, _spawnPoint[i].rotation);
-                scriptGameManager.listEnemies.Add(newEnemy);
-                var scriptDeathStar = newEnemy.GetComponent<DeathStar>();
-                scriptDeathStar.scriptGameManager = scriptGameManager;
-            }
-            
-            scriptGameManager.UpdateScore(50);
-        }
-        else
-        {
-            scriptGameManager.UpdateScore(100);
-        }
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                Instantiate(_particleExplosionLarge, transform.position, transform.rotation);
 
-        //Instantiate(_particleSmoke, transform.position, transform.rotation);
-        scriptGameManager.RemoveEnemy(gameObject);
-        Destroy(gameObject);
+                for (int i = 0; i < 3; i++)
+                {
+                    var newEnemy = Instantiate(_prefabDeathStarMedium, _spawnPoint[i].position,
+                        _spawnPoint[i].rotation);
+                    scriptGameManager.listEnemies.Add(newEnemy);
+                    scriptGameManager.listDeathStar.Add(newEnemy);
+                    var scriptDeathStar = newEnemy.GetComponent<DeathStar>();
+                    scriptDeathStar.scriptGameManager = scriptGameManager;
+                    scriptDeathStar.target = target;
+                }
+
+                scriptGameManager.UpdateScore(20);
+            }
+            else if (_size == 1)
+            {
+                gameObject.GetComponent<CapsuleCollider>().enabled = false;
+                //Instantiate(_particleExplosionMedium, transform.position, transform.rotation);
+
+                for (int i = 0; i < 2; i++)
+                {
+                    var newEnemy = Instantiate(_prefabDeathStarSmall, _spawnPoint[i].position, _spawnPoint[i].rotation);
+                    scriptGameManager.listEnemies.Add(newEnemy);
+                    scriptGameManager.listDeathStar.Add(newEnemy);
+                    var scriptDeathStar = newEnemy.GetComponent<DeathStar>();
+                    scriptDeathStar.scriptGameManager = scriptGameManager;
+                    scriptDeathStar.target = target;
+                }
+
+                scriptGameManager.UpdateScore(50);
+            }
+            else
+            {
+                gameObject.GetComponent<BoxCollider>().enabled = false;
+                Instantiate(_particleExplosionSmall, transform.position, transform.rotation);
+                scriptGameManager.UpdateScore(100);
+            }
+
+            scriptGameManager.RemoveEnemy(gameObject);
+            scriptGameManager.RemoveDeathStar(gameObject);
+            Destroy(gameObject);
+        }
     }
 }

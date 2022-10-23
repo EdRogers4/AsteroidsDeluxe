@@ -9,6 +9,7 @@ public class AnimationEvents : MonoBehaviour
 
     public void PlayerReady()
     {
+        StartCoroutine(_scriptGameManager.SpawnDeathStar());
         _scriptGameManager.NextLevel();
         _scriptGameManager.SetLives(2);
         _scriptPlayer.PlayerStart();

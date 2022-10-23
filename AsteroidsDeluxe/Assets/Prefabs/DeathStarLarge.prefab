@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5382344771836462890}
   m_Layer: 0
   m_Name: DeathStarLarge
-  m_TagString: Untagged
+  m_TagString: Large
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,21 +134,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingAxis: 0
   scriptGameManager: {fileID: 0}
+  target: {fileID: 0}
   _spawnPoint:
   - {fileID: 5382344772195204240}
   - {fileID: 5382344772804044520}
   - {fileID: 5382344772841994582}
-  _prefabDeathStarMedium: {fileID: 0}
-  _prefabDeathStarSmall: {fileID: 0}
+  _prefabDeathStarMedium: {fileID: 5108056693668719123, guid: 36d9831d8c07475489da70060d55f7c0, type: 3}
+  _prefabDeathStarSmall: {fileID: 6635630639500909938, guid: 960a50ec575087542851f0c73d824abc, type: 3}
   _size: 0
   _screenTop: 16.25
   _screenBottom: -16.25
   _screenLeft: -27.5
   _screenRight: 27.5
-  _speed: 2
+  _speedMove: 2
+  _speedTurn: 0
+  _isHit: 0
   _startingPosition: {x: 0, y: 0, z: 0}
   _startingTarget: {x: 0, y: 0, z: 0}
-  _particleExplosionLarge: {fileID: 0}
+  _particleExplosionLarge: {fileID: 198665507610156730, guid: 527aa46ff4d5e64488b5633692238c15, type: 3}
   _particleExplosionMedium: {fileID: 0}
   _particleExplosionSmall: {fileID: 0}
 --- !u!114 &5382344771836462890

@@ -41,8 +41,7 @@ public class Drone : MonoBehaviour
         {
             Vector3 targetDirection = (target.position - transform.position).normalized;
             var targetRotation = Quaternion.LookRotation(targetDirection);
-            transform.rotation =
-                Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * _speedTurn);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * _speedTurn);
 
             var step = _speedMove * Time.deltaTime;
 

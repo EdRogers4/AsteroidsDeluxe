@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 4382104890010326465}
   m_Layer: 0
   m_Name: DeathStarMedium
-  m_TagString: Untagged
+  m_TagString: Medium
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -322,6 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingAxis: 0
   scriptGameManager: {fileID: 0}
+  target: {fileID: 0}
   _spawnPoint:
   - {fileID: 5108056694325188685}
   - {fileID: 5108056692806613840}
@@ -332,11 +333,13 @@ MonoBehaviour:
   _screenBottom: -15.25
   _screenLeft: -26.5
   _screenRight: 26.5
-  _speed: 6
+  _speedMove: 3.5
+  _speedTurn: 50
+  _isHit: 0
   _startingPosition: {x: 0, y: 0, z: 0}
   _startingTarget: {x: 0, y: 0, z: 0}
   _particleExplosionLarge: {fileID: 0}
-  _particleExplosionMedium: {fileID: 0}
+  _particleExplosionMedium: {fileID: 198665507610156730, guid: d9ab70eebd5d0b84da23b6cc6be2e0ae, type: 3}
   _particleExplosionSmall: {fileID: 0}
 --- !u!114 &4382104890010326465
 MonoBehaviour:

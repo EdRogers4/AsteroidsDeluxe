@@ -107,9 +107,10 @@ GameObject:
   - component: {fileID: 6635630639500909939}
   - component: {fileID: 4656059595421879251}
   - component: {fileID: 3025778106538707639}
+  - component: {fileID: 2209427302443992743}
   m_Layer: 0
   m_Name: DeathStarSmall
-  m_TagString: Untagged
+  m_TagString: Small
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -222,6 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingAxis: 0
   scriptGameManager: {fileID: 0}
+  target: {fileID: 0}
   _spawnPoint: []
   _prefabDeathStarMedium: {fileID: 6635630639500909938}
   _prefabDeathStarSmall: {fileID: 6635630639500909938}
@@ -230,12 +232,31 @@ MonoBehaviour:
   _screenBottom: -14.25
   _screenLeft: -25.5
   _screenRight: 25.5
-  _speed: 6
+  _speedMove: 3.5
+  _speedTurn: 50
+  _isHit: 0
   _startingPosition: {x: 0, y: 0, z: 0}
   _startingTarget: {x: 0, y: 0, z: 0}
   _particleExplosionLarge: {fileID: 0}
   _particleExplosionMedium: {fileID: 0}
-  _particleExplosionSmall: {fileID: 0}
+  _particleExplosionSmall: {fileID: 198665507610156730, guid: 156b5155cd2b0e3469377bac36f848e8, type: 3}
+--- !u!114 &2209427302443992743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6635630639500909938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13abc00054f091d48a927fb1162d815d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _screenTop: 14.25
+  _screenBottom: -14.25
+  _screenLeft: -25.5
+  _screenRight: 25.5
+  _isDrone: 0
 --- !u!1001 &6635630638134950203
 PrefabInstance:
   m_ObjectHideFlags: 0

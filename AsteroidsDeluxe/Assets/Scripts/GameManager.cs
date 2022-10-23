@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> listEnemies;
+    public List<GameObject> listDeathStar;
     public bool isGameOver;
     [SerializeField] private GameObject _drone;
     [SerializeField] private Drone _scriptDrone;
@@ -16,9 +17,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Animator _animatorStartScreen;
     [SerializeField] private int _asteroidsToSpawn;
     [SerializeField] private GameObject _prefabAsteroidLarge;
+    [SerializeField] private GameObject _prefabDeathStarLarge;
     [SerializeField] private Text _textScore;
     [SerializeField] private float _respawnDroneMin;
     [SerializeField] private float _respawnDroneMax;
+    [SerializeField] private float _respawnDeathStarMin;
+    [SerializeField] private float _respawnDeathStarMax;
     private int _score;
     private int _formatScoreCount;
     private int _formatScoreLength;
@@ -48,6 +52,16 @@ public class GameManager : MonoBehaviour
         if (listEnemies.Count <= 0)
         {
             NextLevel();
+        }
+    }
+
+    public void RemoveDeathStar(GameObject deathStar)
+    {
+        listDeathStar.Remove(deathStar);
+
+        if (listDeathStar.Count <= 0)
+        {
+            StartCoroutine(SpawnDeathStar());
         }
     }
     
@@ -131,5 +145,17 @@ public class GameManager : MonoBehaviour
         _scriptDrone.collider.enabled = true;
         _scriptDrone.renderer.enabled = true;
         _scriptDrone.isActive = true;
+    }
+
+    public IEnumerator SpawnDeathStar()
+    {
+        yield return new WaitForSeconds(Random.Range(_respawnDeathStarMin, _respawnDeathStarMax));
+        var newDeathStar = Instantiate(_prefabDeathStarLarge, transform.position, transform.rotation);
+        listEnemies.Add(newDeathStar);
+        listDeathStar.Add(newDeathStar);
+        var scriptDeathStar = newDeathStar.GetComponent<DeathStar>();
+        scriptDeathStar.startingAxis = Random.Range(0,5);
+        scriptDeathStar.scriptGameManager = this;
+        scriptDeathStar.target = _scriptPlayer.transform;
     }
 }
