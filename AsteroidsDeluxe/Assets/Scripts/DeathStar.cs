@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Asteroid : MonoBehaviour
+public class DeathStar : MonoBehaviour
 {
     public int startingAxis;
     public GameManager scriptGameManager;
     [SerializeField] private Transform[] _spawnPoint;
-    [SerializeField] private GameObject _prefabAsteroidMedium;
-    [SerializeField] private GameObject _prefabAsteroidSmall;
+    [SerializeField] private GameObject _prefabDeathStarMedium;
+    [SerializeField] private GameObject _prefabDeathStarSmall;
     [SerializeField] private int _size;
     [SerializeField] private float _screenTop;
     [SerializeField] private float _screenBottom;
@@ -17,9 +17,11 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private Vector3 _startingPosition;
     [SerializeField] private Vector3 _startingTarget;
-    [SerializeField] private ParticleSystem _particleSmoke;
-
-    private void Start()
+    [SerializeField] private ParticleSystem _particleExplosionLarge;
+    [SerializeField] private ParticleSystem _particleExplosionMedium;
+    [SerializeField] private ParticleSystem _particleExplosionSmall;
+    
+    void Start()
     {
         _startingTarget = new Vector3(Random.Range(_screenLeft, _screenRight), 0f, Random.Range(_screenTop, _screenBottom));
 
@@ -58,7 +60,7 @@ public class Asteroid : MonoBehaviour
         var step =  _speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, step);
     }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Shield")
@@ -70,7 +72,19 @@ public class Asteroid : MonoBehaviour
         
         if (collision.transform.tag == "Laser")
         {
-            gameObject.GetComponent<SphereCollider>().enabled = false;
+            switch (_size)
+            {
+                case 0:
+                    gameObject.GetComponent<SphereCollider>().enabled = false;
+                    break;
+                case 1:
+                    gameObject.GetComponent<CapsuleCollider>().enabled = false;
+                    break;
+                case 2:
+                    gameObject.GetComponent<BoxCollider>().enabled = false;
+                    break;
+            }
+
             collision.gameObject.GetComponent<Laser>().DestroyLaser();
         }
 
@@ -78,22 +92,22 @@ public class Asteroid : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                var newAsteroid = Instantiate(_prefabAsteroidMedium, _spawnPoint[i].position, transform.rotation);
-                scriptGameManager.listEnemies.Add(newAsteroid);
-                var scriptAsteroid = newAsteroid.GetComponent<Asteroid>();
-                scriptAsteroid.scriptGameManager = scriptGameManager;
+                var newEnemy = Instantiate(_prefabDeathStarMedium, _spawnPoint[i].position, _spawnPoint[i].rotation);
+                scriptGameManager.listEnemies.Add(newEnemy);
+                var scriptDeathStar = newEnemy.GetComponent<DeathStar>();
+                scriptDeathStar.scriptGameManager = scriptGameManager;
             }
             
             scriptGameManager.UpdateScore(20);
         }
         else if (_size == 1)
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 2; i++)
             {
-                var newAsteroid = Instantiate(_prefabAsteroidSmall, _spawnPoint[i].position, transform.rotation);
-                scriptGameManager.listEnemies.Add(newAsteroid);
-                var scriptAsteroid = newAsteroid.GetComponent<Asteroid>();
-                scriptAsteroid.scriptGameManager = scriptGameManager;
+                var newEnemy = Instantiate(_prefabDeathStarSmall, _spawnPoint[i].position, _spawnPoint[i].rotation);
+                scriptGameManager.listEnemies.Add(newEnemy);
+                var scriptDeathStar = newEnemy.GetComponent<DeathStar>();
+                scriptDeathStar.scriptGameManager = scriptGameManager;
             }
             
             scriptGameManager.UpdateScore(50);
@@ -103,7 +117,7 @@ public class Asteroid : MonoBehaviour
             scriptGameManager.UpdateScore(100);
         }
 
-        Instantiate(_particleSmoke, transform.position, transform.rotation);
+        //Instantiate(_particleSmoke, transform.position, transform.rotation);
         scriptGameManager.RemoveEnemy(gameObject);
         Destroy(gameObject);
     }
