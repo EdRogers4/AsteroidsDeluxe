@@ -221,6 +221,7 @@ public class Player : MonoBehaviour
         if (collision.transform.tag == "Laser")
         {
             collision.gameObject.GetComponent<Laser>().DestroyLaser();
+            _scriptGameManager.PlaySoundDestroyDeathStarSmall();
         }
         
         if (_isShieldActive) return;

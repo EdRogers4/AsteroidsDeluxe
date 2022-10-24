@@ -184,17 +184,17 @@ public class GameManager : MonoBehaviour
 
     public void PlaySoundDestroyDeathStarLarge()
     {
-        _audioSource.PlayOneShot(_audioDestroyDeathStarLarge, 1.5f);
+        _audioSource.PlayOneShot(_audioDestroyDeathStarLarge, 2.0f);
     }
     
     public void PlaySoundDestroyDeathStarMedium()
     {
-        _audioSource.PlayOneShot(_audioDestroyDeathStarMedium, 1.5f);
+        _audioSource.PlayOneShot(_audioDestroyDeathStarMedium, 2.0f);
     }
     
     public void PlaySoundDestroyDeathStarSmall()
     {
-        _audioSource.PlayOneShot(_audioDestroyDeathStarSmall, 1.5f);
+        _audioSource.PlayOneShot(_audioDestroyDeathStarSmall, 5.0f);
     }
     
     public void PlaySoundDestroyDrone()
