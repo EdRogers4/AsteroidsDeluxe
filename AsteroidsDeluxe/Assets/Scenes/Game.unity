@@ -5961,7 +5961,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: 45}
+  m_AnchoredPosition: {x: 0, y: 45}
   m_SizeDelta: {x: 270, y: 74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &241858387
@@ -21475,7 +21475,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: -85}
+  m_AnchoredPosition: {x: 0, y: -85}
   m_SizeDelta: {x: 270, y: 74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &571895871
@@ -26481,7 +26481,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 305}
+  m_AnchoredPosition: {x: 0, y: -10000}
   m_SizeDelta: {x: 832, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &705179386
@@ -26556,7 +26556,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: -150}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 270, y: 74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &708615220
@@ -31953,7 +31953,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 000000
+  m_Text: 010000
 --- !u!222 &1041629797
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32150,7 +32150,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: 305}
+  m_AnchoredPosition: {x: 0, y: 305}
   m_SizeDelta: {x: 270, y: 74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1087653055
@@ -32308,7 +32308,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: -215}
+  m_AnchoredPosition: {x: 0, y: -215}
   m_SizeDelta: {x: 270, y: 74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1100632283
@@ -33436,7 +33436,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: -280}
+  m_AnchoredPosition: {x: 0, y: -280}
   m_SizeDelta: {x: 270, y: 74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1303432516
@@ -34094,7 +34094,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: 110}
+  m_AnchoredPosition: {x: 0, y: 110}
   m_SizeDelta: {x: 270, y: 74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1578099056
@@ -34486,7 +34486,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: -20}
+  m_AnchoredPosition: {x: 0, y: -20}
   m_SizeDelta: {x: 270, y: 74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1637443329
@@ -44751,6 +44751,8 @@ MonoBehaviour:
   listEnemies: []
   listDeathStar: []
   isGameOver: 0
+  isRestart: 0
+  isHighScoreReached: 0
   isHighScoreUI: 0
   highScores: 1027000028230000401f0000581b00007017000088130000a00f0000b80b0000d0070000e8030000
   _drone: {fileID: 397472219}
@@ -44774,11 +44776,13 @@ MonoBehaviour:
   _currentRank: 0
   _currentInitial: 0
   _currentInput: 0
+  _topScores: 1027000028230000401f0000581b00007017000088130000a00f0000b80b0000d0070000e8030000
   _prefabAsteroidLarge: {fileID: 2666307699087454728, guid: 7fd9af7c36c7fde4387732e36a43d286, type: 3}
   _prefabDeathStarLarge: {fileID: 5382344771836462880, guid: 4522ebfdcc1a6b8449bcccd9e44a7aed, type: 3}
   _textScore: {fileID: 32937216}
   _textBonus: {fileID: 675733672}
   _textTopScore: {fileID: 1041629796}
+  _textTopInitials: {fileID: 69378103}
   _textHighScore:
   - {fileID: 1087653055}
   - {fileID: 1957826168}
@@ -44842,8 +44846,6 @@ MonoBehaviour:
   _respawnDroneMax: 10
   _respawnDeathStarMin: 15
   _respawnDeathStarMax: 24
-  _isTopScore: 0
-  _isHighScore: 1
   _audioSource: {fileID: 1793723050}
   _audioDestroyDeathStarLarge: {fileID: 8300000, guid: b46071f8da5e4c74885d90313aa12009, type: 3}
   _audioDestroyDeathStarMedium: {fileID: 8300000, guid: 99f1a3e8b1800f541976adf9be9002c3, type: 3}
@@ -49667,7 +49669,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: 240}
+  m_AnchoredPosition: {x: 0, y: 240}
   m_SizeDelta: {x: 270, y: 74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1957826168
@@ -54810,7 +54812,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26, y: 175}
+  m_AnchoredPosition: {x: 0, y: 175}
   m_SizeDelta: {x: 270, y: 74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2143995637

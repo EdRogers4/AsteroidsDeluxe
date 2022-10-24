@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> listEnemies;
     public List<GameObject> listDeathStar;
     public bool isGameOver;
+    public bool isRestart;
+    public bool isHighScoreReached;
     public bool isHighScoreUI;
     public int[] highScores;
     [SerializeField] private GameObject _drone;
@@ -22,11 +24,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _currentRank;
     [SerializeField] private int _currentInitial;
     [SerializeField] private int _currentInput;
+    [SerializeField] private int[] _topScores;
     [SerializeField] private GameObject _prefabAsteroidLarge;
     [SerializeField] private GameObject _prefabDeathStarLarge;
     [SerializeField] private Text _textScore;
     [SerializeField] private Text _textBonus;
     [SerializeField] private Text _textTopScore;
+    [SerializeField] private Text _textTopInitials;
     [SerializeField] private Text[] _textHighScore;
     [SerializeField] private Text[] _textInitials;
     [SerializeField] private Text[] _textInput;
@@ -37,8 +41,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _respawnDroneMax;
     [SerializeField] private float _respawnDeathStarMin;
     [SerializeField] private float _respawnDeathStarMax;
-    [SerializeField] private bool _isTopScore;
-    [SerializeField] private bool _isHighScore;
 
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _audioDestroyDeathStarLarge;
@@ -61,13 +63,14 @@ public class GameManager : MonoBehaviour
     private int _formatScoreCount;
     private int _formatScoreLength;
     private bool _isStartGame;
-    private bool _isRestart;
     private bool _isStartInitials;
 
     private void Start()
     {
         _formatScoreLength = _textScore.text.Length;
+        _currentRank = 10;
         _bonus = 10000;
+        int.TryParse(_textHighScore[0].text, out _topScores[0]);
     }
 
     public void NextLevel()
@@ -158,12 +161,12 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         }
 
-        if (_isRestart && _audioSource.volume > 0)
+        if (isRestart && _audioSource.volume > 0)
         {
             _audioSource.volume -= 0.000155f;
         }
 
-        if (isHighScoreUI && _isHighScore)
+        if (isHighScoreUI && isHighScoreReached)
         {
             if (Input.GetKeyDown(KeyCode.Return) && _currentInitial < 3)
             {
@@ -171,11 +174,11 @@ public class GameManager : MonoBehaviour
                 _currentInput = 1;
                 _animatorHighScore.SetInteger("input", _currentInitial + 1);
                 PlaySoundBonus();
-                RecordHighScore();
+                RecordInitials();
 
                 if (_currentInitial >= 3)
                 {
-                    _isRestart = true;
+                    isRestart = true;
                     _animatorHighScore.SetBool("isRestart", true);
 
                     for (int i = 0; i < _underline.Length; i++)
@@ -215,7 +218,7 @@ public class GameManager : MonoBehaviour
         _textInput[_currentInitial].text = _stringInput[_currentInput];
     }
 
-    private void RecordHighScore()
+    private void RecordInitials()
     {
         _textInitials[_currentRank].text = "";
         
@@ -223,6 +226,17 @@ public class GameManager : MonoBehaviour
         {
             _textInitials[_currentRank].text += _textInput[i].text;
         }
+    }
+
+    public void RecordHighScore()
+    {
+        _textScore.text = "" + _score;
+        _formatScoreCount = _formatScoreLength - _textScore.text.Length;
+        Debug.Log("Format score count: " + _formatScoreCount);
+        FormatScore(_textHighScore[_currentRank]);
+        _currentScore.rectTransform.position 
+            = new Vector3(_textHighScore[_currentRank].rectTransform.position.x, _textHighScore[_currentRank].rectTransform.position.y);
+        _textInitials[_currentRank].text = "   ";
     }
 
     public void StartInitials()
@@ -235,8 +249,6 @@ public class GameManager : MonoBehaviour
             _underline[i].enabled = true;
             _textInput[i].enabled = true;
         }
-        
-        isHighScoreUI = true;
     }
 
     public void UpdateScore(int points)
@@ -244,14 +256,7 @@ public class GameManager : MonoBehaviour
         _score += points;
         _textScore.text = "" + _score;
         _formatScoreCount = _formatScoreLength - _textScore.text.Length;
-        _textScore.text = "";
-
-        for (int i = 0; i < _formatScoreCount; i++)
-        {
-            _textScore.text += "0";
-        }
-
-        _textScore.text += "" + _score;
+        FormatScore(_textScore);
 
         if (_score >= _bonus)
         {
@@ -261,6 +266,41 @@ public class GameManager : MonoBehaviour
             _textBonus.text = "" + _bonus;
             PlaySoundBonus();
         }
+
+        if (_score > _topScores[0])
+        {
+            if (_textTopInitials.text != "   ")
+            {
+                _textTopInitials.text = "   ";
+            }
+            
+            _textTopScore.text = "" + _score;
+            _formatScoreCount = _formatScoreLength - _textTopScore.text.Length;
+            FormatScore(_textTopScore);
+        }
+
+        if (_score > _topScores[_topScores.Length - 1] && !isHighScoreReached)
+        {
+            isHighScoreReached = true;
+        }
+
+        if (_score > _topScores[_currentRank - 1])
+        {
+            Debug.Log("Current rank:" + _currentRank);
+            _currentRank -= 1;
+        }
+    }
+
+    private void FormatScore(Text text)
+    {
+        text.text = "";
+
+        for (int i = 0; i < _formatScoreCount; i++)
+        {
+            text.text += "0";
+        }
+
+        text.text += "" + _score;
     }
 
     public IEnumerator SpawnDrone()

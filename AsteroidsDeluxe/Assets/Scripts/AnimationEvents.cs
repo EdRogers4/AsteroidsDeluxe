@@ -32,9 +32,23 @@ public class AnimationEvents : MonoBehaviour
         _scriptGameManager.ResetStartButton();
     }
 
+    public void RestartGame()
+    {
+        _scriptGameManager.isRestart = true;
+    }
+
     public void ToggleUnderlines()
     {
-        _scriptGameManager.StartInitials();
+        _scriptGameManager.isHighScoreUI = true;
+        
+        if (_scriptGameManager.isHighScoreReached)
+        {
+            _scriptGameManager.StartInitials();
+        }
+        else
+        {
+            _animatorHighScore.SetBool("isSkip", true);
+        }
     }
     
     public void ToggleCanvasOff()
@@ -47,7 +61,11 @@ public class AnimationEvents : MonoBehaviour
 
     public void ToggleCanvasOn()
     {
-        Debug.Log("Toggle Canvas");
+        if (_scriptGameManager.isHighScoreReached)
+        {
+            _scriptGameManager.RecordHighScore();
+        }
+        
         _canvas.enabled = true;
         _animatorHighScore.SetBool("isStart", true);
     }
