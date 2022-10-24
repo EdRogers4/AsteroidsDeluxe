@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public List<Transform> listLaser;
     [SerializeField] private GameManager _scriptGameManager;
+    [SerializeField] private CameraShake _scriptCameraShake;
     [SerializeField] private Transform _gunBarrel;
     [SerializeField] private GameObject _prefabLaser;
     [SerializeField] private SphereCollider _collider;
@@ -223,25 +224,33 @@ public class Player : MonoBehaviour
             collision.gameObject.GetComponent<Laser>().DestroyLaser();
             _scriptGameManager.PlaySoundDestroyDeathStarSmall();
         }
-        
-        if (_isShieldActive) return;
+
+        if (_isShieldActive)
+        {
+            StartCoroutine(_scriptCameraShake.Shake(0.1f, 0.1f));
+            return;
+        }
         
         switch (collision.transform.tag)
         {
             case "Small":
                 _health -= 15;
+                StartCoroutine(_scriptCameraShake.Shake(0.15f, 0.4f));
                 break;
             case "Medium":
                 _health -= 25;
+                StartCoroutine(_scriptCameraShake.Shake(0.15f, 0.3f));
                 break;
             case "Large":
                 _health -= 95;
+                StartCoroutine(_scriptCameraShake.Shake(0.35f, 0.8f));
                 break;
             case "Laser":
                 _health -= 20;
+                StartCoroutine(_scriptCameraShake.Shake(0.25f, 0.4f));
                 break;
         }
-
+        
         _healthBar.rectTransform.sizeDelta = new Vector2(((float) _health * 3f), 50f);
 
         if (_health <= 0)

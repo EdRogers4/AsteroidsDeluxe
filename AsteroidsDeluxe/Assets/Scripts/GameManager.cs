@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
 
         if (isGameOver && _audioSource.volume > 0)
         {
-            _audioSource.volume -= 0.0001f;
+            _audioSource.volume -= 0.000115f;
         }
     }
 
