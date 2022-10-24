@@ -3197,6 +3197,7 @@ MonoBehaviour:
   _respawnDroneMax: 10
   _respawnDeathStarMin: 15
   _respawnDeathStarMax: 24
+  _audioSource: {fileID: 1793723050}
 --- !u!1001 &2016296008
 PrefabInstance:
   m_ObjectHideFlags: 0

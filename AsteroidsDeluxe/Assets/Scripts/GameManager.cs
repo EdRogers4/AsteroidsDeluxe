@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _respawnDroneMax;
     [SerializeField] private float _respawnDeathStarMin;
     [SerializeField] private float _respawnDeathStarMax;
+    [SerializeField] private AudioSource _audioSource;
     private int _score;
     private int _formatScoreCount;
     private int _formatScoreLength;
@@ -118,6 +119,11 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
+        }
+
+        if (isGameOver && _audioSource.volume > 0)
+        {
+            _audioSource.volume -= 0.0001f;
         }
     }
 
