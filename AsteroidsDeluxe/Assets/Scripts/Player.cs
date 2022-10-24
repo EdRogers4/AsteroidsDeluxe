@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public List<Transform> listLaser;
+    public int lives;
     [SerializeField] private GameManager _scriptGameManager;
     [SerializeField] private CameraShake _scriptCameraShake;
     [SerializeField] private Transform _gunBarrel;
     [SerializeField] private GameObject _prefabLaser;
     [SerializeField] private SphereCollider _collider;
     [SerializeField] private MeshRenderer _renderer;
-    [SerializeField] private int _lives;
     [SerializeField] private int _health;
     [SerializeField] private Image _healthBar;
     [SerializeField] private Image _shieldBar;
@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
         _isPlay = true;
         _renderer.enabled = true;
         _health = 100;
-        _lives = 2;
+        lives = 2;
     }
 
     private void Update()
@@ -217,7 +217,7 @@ public class Player : MonoBehaviour
         _collider.enabled = true;
         _renderer.enabled = true;
         _isPlay = true;
-        _scriptGameManager.SetLives(_lives);
+        _scriptGameManager.SetLives(lives);
         _scriptGameManager.PlaySoundSpawnPlayer();
         _healthBar.rectTransform.sizeDelta = new Vector2(((float) _health * 3f), 50f);
         _particleJet[2].Play();
@@ -262,7 +262,7 @@ public class Player : MonoBehaviour
 
         if (_health <= 0)
         {
-            _lives -= 1;
+            lives -= 1;
             _isPlay = false;
             _isThrust = false;
             _isTurnLeft = false;
@@ -278,7 +278,7 @@ public class Player : MonoBehaviour
                 _particleJet[i].Stop();
             }
             
-            if (_lives <= -1)
+            if (lives <= -1)
             {
                 _scriptGameManager.GameOver();
             }

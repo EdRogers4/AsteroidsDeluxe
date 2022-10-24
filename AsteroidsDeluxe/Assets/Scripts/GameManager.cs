@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _prefabAsteroidLarge;
     [SerializeField] private GameObject _prefabDeathStarLarge;
     [SerializeField] private Text _textScore;
+    [SerializeField] private Text _textBonus;
     [SerializeField] private float _respawnDroneMin;
     [SerializeField] private float _respawnDroneMax;
     [SerializeField] private float _respawnDeathStarMin;
@@ -38,8 +39,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip _audioSpawnPlayer1;
     [SerializeField] private AudioClip _audioSpawnPlayer2;
     [SerializeField] private AudioClip _audioStartClick;
+    [SerializeField] private AudioClip _audioBonus;
     
     private int _score;
+    private int _bonus;
     private int _formatScoreCount;
     private int _formatScoreLength;
     private bool _isStartGame;
@@ -47,6 +50,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _formatScoreLength = _textScore.text.Length;
+        _bonus = 10000;
     }
 
     public void NextLevel()
@@ -139,7 +143,7 @@ public class GameManager : MonoBehaviour
 
         if (isGameOver && _audioSource.volume > 0)
         {
-            _audioSource.volume -= 0.000115f;
+            _audioSource.volume -= 0.000155f;
         }
     }
 
@@ -156,6 +160,15 @@ public class GameManager : MonoBehaviour
         }
 
         _textScore.text += "" + _score;
+
+        if (_score >= _bonus)
+        {
+            _scriptPlayer.lives += 1;
+            SetLives(_scriptPlayer.lives);
+            _bonus += 10000;
+            _textBonus.text = "" + _bonus;
+            PlaySoundBonus();
+        }
     }
 
     public IEnumerator SpawnDrone()
@@ -243,5 +256,10 @@ public class GameManager : MonoBehaviour
     private void PlaySoundStartClick()
     {
         _audioSource.PlayOneShot(_audioStartClick, 1.5f);
+    }
+    
+    private void PlaySoundBonus()
+    {
+        _audioSource.PlayOneShot(_audioBonus, 4.0f);
     }
 }
