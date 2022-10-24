@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     [SerializeField] private ParticleSystem _particleAura;
     [SerializeField] private ParticleSystem _particleExplosion;
     [SerializeField] private ParticleSystem _particleMuzzle;
+    [SerializeField] private ParticleSystem[] _particleJet;
     private Rigidbody _rigidBody;
 
     private void Start()
@@ -58,14 +59,18 @@ public class Player : MonoBehaviour
     {
         if (_isPlay)
         {
-            if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)) || (Input.GetMouseButtonDown(1)))
+            if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
             {
                 _isThrust = true;
+                _particleJet[0].Play();
+                _particleJet[1].Play();
             }
-            else if ((Input.GetKeyUp(KeyCode.W)) || (Input.GetKeyUp(KeyCode.UpArrow)) || (Input.GetMouseButtonUp(1)))
+            else if ((Input.GetKeyUp(KeyCode.W)) || (Input.GetKeyUp(KeyCode.UpArrow)))
             {
                 _isThrust = false;
                 _speedThrust = _speedThrustMin;
+                _particleJet[0].Stop();
+                _particleJet[1].Stop();
             }
 
             if ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
@@ -99,14 +104,14 @@ public class Player : MonoBehaviour
                 _isShoot = false;
             }
 
-            if (((Input.GetKeyDown(KeyCode.LeftShift)) || (Input.GetMouseButtonDown(2))) && _shieldTime > 0f && _health > 0f)
+            if (((Input.GetKeyDown(KeyCode.LeftShift)) || (Input.GetMouseButtonDown(1))) && _shieldTime > 0f && _health > 0f)
             {
                 _isShield = true;
                 _particleShield.Play();
                 _particleAura.Play();
                 _scriptGameManager.PlaySoundShieldOn();
             }
-            else if ((Input.GetKeyUp(KeyCode.LeftShift)) || (Input.GetMouseButtonUp(2)))
+            else if ((Input.GetKeyUp(KeyCode.LeftShift)) || (Input.GetMouseButtonUp(1)))
             {
                 _isShield = false;
                 _particleShield.Stop();
@@ -215,6 +220,8 @@ public class Player : MonoBehaviour
         _scriptGameManager.SetLives(_lives);
         _scriptGameManager.PlaySoundSpawnPlayer();
         _healthBar.rectTransform.sizeDelta = new Vector2(((float) _health * 3f), 50f);
+        _particleJet[2].Play();
+        _particleJet[3].Play();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -265,6 +272,11 @@ public class Player : MonoBehaviour
             _collider.enabled = false;
             _renderer.enabled = false;
             Instantiate(_particleExplosion, transform.position, transform.rotation);
+
+            for (int i = 0; i < _particleJet.Length; i++)
+            {
+                _particleJet[i].Stop();
+            }
             
             if (_lives <= -1)
             {

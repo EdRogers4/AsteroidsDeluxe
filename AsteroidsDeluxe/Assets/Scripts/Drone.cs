@@ -11,6 +11,7 @@ public class Drone : MonoBehaviour
     public List<Transform> listLaser;
     public SphereCollider collider;
     public MeshRenderer renderer;
+    public ParticleSystem[] particleJet;
     [SerializeField] private ScreenWrap _scriptScreenWrap;
     [SerializeField] private Transform _barrel;
     [SerializeField] private GameObject _prefabLaser;
@@ -126,6 +127,8 @@ public class Drone : MonoBehaviour
             scriptGameManager.PlaySoundDestroyDrone();
             collider.enabled = false;
             renderer.enabled = false;
+            particleJet[0].Stop();
+            particleJet[1].Stop();
             isActive = false;
             StartCoroutine(scriptGameManager.SpawnDrone());
         }

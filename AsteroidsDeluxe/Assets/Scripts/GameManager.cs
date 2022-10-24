@@ -166,6 +166,8 @@ public class GameManager : MonoBehaviour
         _scriptDrone.isMoveRight = spawnPoint < _listSpawnPoints.Count / 2;
         _scriptDrone.collider.enabled = true;
         _scriptDrone.renderer.enabled = true;
+        _scriptDrone.particleJet[0].Play();
+        _scriptDrone.particleJet[1].Play();
         _scriptDrone.isActive = true;
         PlaySoundSpawnDrone();
     }
