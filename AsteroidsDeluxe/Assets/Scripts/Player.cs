@@ -103,12 +103,14 @@ public class Player : MonoBehaviour
                 _isShield = true;
                 _particleShield.Play();
                 _particleAura.Play();
+                _scriptGameManager.PlaySoundShieldOn();
             }
             else if ((Input.GetKeyUp(KeyCode.LeftShift)) || (Input.GetMouseButtonUp(2)))
             {
                 _isShield = false;
                 _particleShield.Stop();
                 _particleAura.Stop();
+                _scriptGameManager.PlaySoundShieldOff();
             }
         }
 
@@ -210,6 +212,7 @@ public class Player : MonoBehaviour
         _renderer.enabled = true;
         _isPlay = true;
         _scriptGameManager.SetLives(_lives);
+        _scriptGameManager.PlaySoundSpawnPlayer();
         _healthBar.rectTransform.sizeDelta = new Vector2(((float) _health * 3f), 50f);
     }
 

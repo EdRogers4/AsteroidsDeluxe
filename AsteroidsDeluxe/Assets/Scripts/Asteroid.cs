@@ -83,7 +83,8 @@ public class Asteroid : MonoBehaviour
                 var scriptAsteroid = newAsteroid.GetComponent<Asteroid>();
                 scriptAsteroid.scriptGameManager = scriptGameManager;
             }
-            
+
+            scriptGameManager.PlaySoundExplosionLarge();
             scriptGameManager.UpdateScore(20);
         }
         else if (_size == 1)
@@ -96,10 +97,12 @@ public class Asteroid : MonoBehaviour
                 scriptAsteroid.scriptGameManager = scriptGameManager;
             }
             
+            scriptGameManager.PlaySoundExplosionMedium();
             scriptGameManager.UpdateScore(50);
         }
         else
         {
+            scriptGameManager.PlaySoundExplosionSmall();
             scriptGameManager.UpdateScore(100);
         }
 

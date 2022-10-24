@@ -3198,6 +3198,19 @@ MonoBehaviour:
   _respawnDeathStarMin: 15
   _respawnDeathStarMax: 24
   _audioSource: {fileID: 1793723050}
+  _audioDestroyDeathStarLarge: {fileID: 8300000, guid: b46071f8da5e4c74885d90313aa12009, type: 3}
+  _audioDestroyDeathStarMedium: {fileID: 8300000, guid: 99f1a3e8b1800f541976adf9be9002c3, type: 3}
+  _audioDestroyDeathStarSmall: {fileID: 8300000, guid: cea7778d7f7afee419947ac7968bd740, type: 3}
+  _audioDestroyDrone: {fileID: 8300000, guid: dc4b5c96e339f494d8ec77cc193843d8, type: 3}
+  _audioExplosionLarge: {fileID: 8300000, guid: f860a4f8fbb447b43b7189321338ff27, type: 3}
+  _audioExplosionMedium: {fileID: 8300000, guid: 4c4f9dba8af33f64f8d3446543587d91, type: 3}
+  _audioExplosionSmall: {fileID: 8300000, guid: 73bbffdfd21d78c45abc7c473423e4a4, type: 3}
+  _audioShieldOff: {fileID: 8300000, guid: 61e2ffbaf74df654d9f35af97dd6ecb2, type: 3}
+  _audioShieldOn: {fileID: 8300000, guid: bdf1cfb7c3d03ec4ea917c1697641065, type: 3}
+  _audioSpawnDrone: {fileID: 8300000, guid: 315e002d8bc455545814347277f43bf3, type: 3}
+  _audioSpawnPlayer1: {fileID: 8300000, guid: b950feff405db75439460753a8e5f427, type: 3}
+  _audioSpawnPlayer2: {fileID: 8300000, guid: 4d81071312448284c923bc69ec90a95d, type: 3}
+  _audioStartClick: {fileID: 8300000, guid: 1ee5ff16f7ff5184189be9c7880b6a4d, type: 3}
 --- !u!1001 &2016296008
 PrefabInstance:
   m_ObjectHideFlags: 0

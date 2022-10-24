@@ -23,7 +23,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _respawnDroneMax;
     [SerializeField] private float _respawnDeathStarMin;
     [SerializeField] private float _respawnDeathStarMax;
+    
     [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _audioDestroyDeathStarLarge;
+    [SerializeField] private AudioClip _audioDestroyDeathStarMedium;
+    [SerializeField] private AudioClip _audioDestroyDeathStarSmall;
+    [SerializeField] private AudioClip _audioDestroyDrone;
+    [SerializeField] private AudioClip _audioExplosionLarge;
+    [SerializeField] private AudioClip _audioExplosionMedium;
+    [SerializeField] private AudioClip _audioExplosionSmall;
+    [SerializeField] private AudioClip _audioShieldOff;
+    [SerializeField] private AudioClip _audioShieldOn;
+    [SerializeField] private AudioClip _audioSpawnDrone;
+    [SerializeField] private AudioClip _audioSpawnPlayer1;
+    [SerializeField] private AudioClip _audioSpawnPlayer2;
+    [SerializeField] private AudioClip _audioStartClick;
+    
     private int _score;
     private int _formatScoreCount;
     private int _formatScoreLength;
@@ -114,6 +129,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return) && !_isStartGame)
         {
             StartButton();
+            PlaySoundStartClick();
         }
         
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -151,6 +167,7 @@ public class GameManager : MonoBehaviour
         _scriptDrone.collider.enabled = true;
         _scriptDrone.renderer.enabled = true;
         _scriptDrone.isActive = true;
+        PlaySoundSpawnDrone();
     }
 
     public IEnumerator SpawnDeathStar()
@@ -163,5 +180,66 @@ public class GameManager : MonoBehaviour
         scriptDeathStar.startingAxis = Random.Range(0,5);
         scriptDeathStar.scriptGameManager = this;
         scriptDeathStar.target = _scriptPlayer.transform;
+    }
+
+    public void PlaySoundDestroyDeathStarLarge()
+    {
+        _audioSource.PlayOneShot(_audioDestroyDeathStarLarge, 1.5f);
+    }
+    
+    public void PlaySoundDestroyDeathStarMedium()
+    {
+        _audioSource.PlayOneShot(_audioDestroyDeathStarMedium, 1.5f);
+    }
+    
+    public void PlaySoundDestroyDeathStarSmall()
+    {
+        _audioSource.PlayOneShot(_audioDestroyDeathStarSmall, 1.5f);
+    }
+    
+    public void PlaySoundDestroyDrone()
+    {
+        _audioSource.PlayOneShot(_audioDestroyDrone, 1.5f);
+    }
+    
+    public void PlaySoundExplosionLarge()
+    {
+        _audioSource.PlayOneShot(_audioExplosionLarge, 1.8f);
+    }
+    
+    public void PlaySoundExplosionMedium()
+    {
+        _audioSource.PlayOneShot(_audioExplosionMedium, 1.8f);
+    }
+    
+    public void PlaySoundExplosionSmall()
+    {
+        _audioSource.PlayOneShot(_audioExplosionSmall, 1.8f);
+    }
+    
+    public void PlaySoundShieldOff()
+    {
+        _audioSource.PlayOneShot(_audioShieldOff, 1.5f);
+    }
+    
+    public void PlaySoundShieldOn()
+    {
+        _audioSource.PlayOneShot(_audioShieldOn, 1.5f);
+    }
+    
+    private void PlaySoundSpawnDrone()
+    {
+        _audioSource.PlayOneShot(_audioSpawnDrone, 1.5f);
+    }
+    
+    public void PlaySoundSpawnPlayer()
+    {
+        _audioSource.PlayOneShot(_audioSpawnPlayer1, 1.5f);
+        _audioSource.PlayOneShot(_audioSpawnPlayer2, 1.5f);
+    }
+    
+    private void PlaySoundStartClick()
+    {
+        _audioSource.PlayOneShot(_audioStartClick, 1.5f);
     }
 }

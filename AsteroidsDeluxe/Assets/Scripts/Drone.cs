@@ -123,6 +123,7 @@ public class Drone : MonoBehaviour
 
             Instantiate(_particleExplosion, transform.position, transform.rotation);
             scriptGameManager.RemoveEnemy(gameObject);
+            scriptGameManager.PlaySoundDestroyDrone();
             collider.enabled = false;
             renderer.enabled = false;
             isActive = false;

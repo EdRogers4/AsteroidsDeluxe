@@ -97,11 +97,11 @@ public class DeathStar : MonoBehaviour
             {
                 gameObject.GetComponent<SphereCollider>().enabled = false;
                 Instantiate(_particleExplosionLarge, transform.position, transform.rotation);
+                scriptGameManager.PlaySoundDestroyDeathStarLarge();
 
                 for (int i = 0; i < 3; i++)
                 {
-                    var newEnemy = Instantiate(_prefabDeathStarMedium, _spawnPoint[i].position,
-                        _spawnPoint[i].rotation);
+                    var newEnemy = Instantiate(_prefabDeathStarMedium, _spawnPoint[i].position, _spawnPoint[i].rotation);
                     scriptGameManager.listEnemies.Add(newEnemy);
                     scriptGameManager.listDeathStar.Add(newEnemy);
                     var scriptDeathStar = newEnemy.GetComponent<DeathStar>();
@@ -115,6 +115,7 @@ public class DeathStar : MonoBehaviour
             {
                 gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 //Instantiate(_particleExplosionMedium, transform.position, transform.rotation);
+                scriptGameManager.PlaySoundDestroyDeathStarMedium();
 
                 for (int i = 0; i < 2; i++)
                 {
@@ -132,6 +133,7 @@ public class DeathStar : MonoBehaviour
             {
                 gameObject.GetComponent<BoxCollider>().enabled = false;
                 Instantiate(_particleExplosionSmall, transform.position, transform.rotation);
+                scriptGameManager.PlaySoundDestroyDeathStarSmall();
                 scriptGameManager.UpdateScore(100);
             }
 
