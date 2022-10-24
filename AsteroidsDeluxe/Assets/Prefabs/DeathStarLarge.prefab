@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1611632421672350292}
   - component: {fileID: 5382344771836462891}
   - component: {fileID: 5382344771836462890}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DeathStarLarge
   m_TagString: Large
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5382344772097801970}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Detail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 5382344772195204253}
   - component: {fileID: 5382344772195204254}
   - component: {fileID: 5382344772195204255}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DeathStarSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 5382344772804044533}
   - component: {fileID: 5382344772804044534}
   - component: {fileID: 5382344772804044535}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DeathStarSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -412,7 +412,7 @@ GameObject:
   - component: {fileID: 5382344772841994579}
   - component: {fileID: 5382344772841994580}
   - component: {fileID: 5382344772841994581}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DeathStarSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,7 +508,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5382344773511292129}
   - component: {fileID: 5382344773511292128}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -602,6 +602,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Detail
       objectReference: {fileID: 0}
+    - target: {fileID: 1259522958668862, guid: b9fcfa0aefec1314da80716a42c55c1f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4636917979401936, guid: b9fcfa0aefec1314da80716a42c55c1f, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -676,6 +680,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Detail
       objectReference: {fileID: 0}
+    - target: {fileID: 1259522958668862, guid: b9fcfa0aefec1314da80716a42c55c1f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4636917979401936, guid: b9fcfa0aefec1314da80716a42c55c1f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -749,6 +757,10 @@ PrefabInstance:
     - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_Name
       value: DeathStarMediumModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4302288027458532, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_RootOrder
@@ -832,6 +844,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeathStarMediumModel
       objectReference: {fileID: 0}
+    - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4302288027458532, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -914,6 +930,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Detail
       objectReference: {fileID: 0}
+    - target: {fileID: 1259522958668862, guid: b9fcfa0aefec1314da80716a42c55c1f, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4636917979401936, guid: b9fcfa0aefec1314da80716a42c55c1f, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -987,6 +1007,10 @@ PrefabInstance:
     - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_Name
       value: DeathStarMediumModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4302288027458532, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_RootOrder
@@ -1070,6 +1094,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeathStarLargeModel
       objectReference: {fileID: 0}
+    - target: {fileID: 1253286640031572, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1147,6 +1175,10 @@ PrefabInstance:
     - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_Name
       value: DeathStarMediumModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4302288027458532, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_RootOrder
@@ -1230,6 +1262,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeathStarMediumModel
       objectReference: {fileID: 0}
+    - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4302288027458532, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1311,6 +1347,10 @@ PrefabInstance:
     - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_Name
       value: DeathStarMediumModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4302288027458532, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_RootOrder

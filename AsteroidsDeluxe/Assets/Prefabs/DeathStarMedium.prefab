@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5108056692686248418}
   - component: {fileID: 5108056692686248419}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 5108056692806613871}
   - component: {fileID: 5108056692806613870}
   - component: {fileID: 5108056692806613841}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 70346142701327613}
   - component: {fileID: 3439836349026308386}
   - component: {fileID: 4382104890010326465}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DeathStarMedium
   m_TagString: Medium
   m_Icon: {fileID: 0}
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 5108056694325188680}
   - component: {fileID: 5108056694325188683}
   - component: {fileID: 5108056694325188682}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -461,9 +461,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5108056693668719151}
     m_Modifications:
+    - target: {fileID: 2593138875691957313, guid: 1a997cb02aa03604bb99fa3da6e3dd47, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2593138875691957319, guid: 1a997cb02aa03604bb99fa3da6e3dd47, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2593138876262554593, guid: 1a997cb02aa03604bb99fa3da6e3dd47, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2593138876262554599, guid: 1a997cb02aa03604bb99fa3da6e3dd47, type: 3}
       propertyPath: m_Materials.Array.size
@@ -521,13 +529,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jet
       objectReference: {fileID: 0}
+    - target: {fileID: 2593138876442507583, guid: 1a997cb02aa03604bb99fa3da6e3dd47, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2593138877207886060, guid: 1a997cb02aa03604bb99fa3da6e3dd47, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2593138877207886062, guid: 1a997cb02aa03604bb99fa3da6e3dd47, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2593138877762941904, guid: 1a997cb02aa03604bb99fa3da6e3dd47, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2593138877762941906, guid: 1a997cb02aa03604bb99fa3da6e3dd47, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a997cb02aa03604bb99fa3da6e3dd47, type: 3}
@@ -546,6 +566,10 @@ PrefabInstance:
     - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_Name
       value: DeathStarMediumModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4302288027458532, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_RootOrder
@@ -628,6 +652,10 @@ PrefabInstance:
     - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_Name
       value: DeathStarMediumModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846824306798204, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4302288027458532, guid: 42ea65cfa6f57ad4d8f7a5194cc38e90, type: 3}
       propertyPath: m_RootOrder

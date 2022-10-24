@@ -109,7 +109,10 @@ public class DeathStar : MonoBehaviour
                     scriptDeathStar.target = target;
                 }
 
-                scriptGameManager.UpdateScore(20);
+                if (collision.gameObject.layer != 7 && collision.gameObject.layer != 9 && collision.gameObject.layer != 10)
+                {
+                    scriptGameManager.UpdateScore(20);
+                }
             }
             else if (_size == 1)
             {
@@ -127,14 +130,21 @@ public class DeathStar : MonoBehaviour
                     scriptDeathStar.target = target;
                 }
 
-                scriptGameManager.UpdateScore(50);
+                if (collision.gameObject.layer != 7 && collision.gameObject.layer != 9 && collision.gameObject.layer != 10)
+                {
+                    scriptGameManager.UpdateScore(50);
+                }
             }
             else
             {
                 gameObject.GetComponent<BoxCollider>().enabled = false;
                 Instantiate(_particleExplosionSmall, transform.position, transform.rotation);
                 scriptGameManager.PlaySoundDestroyDeathStarSmall();
-                scriptGameManager.UpdateScore(100);
+
+                if (collision.gameObject.layer != 7 && collision.gameObject.layer != 9 && collision.gameObject.layer != 10)
+                {
+                    scriptGameManager.UpdateScore(100);
+                }
             }
 
             scriptGameManager.RemoveEnemy(gameObject);

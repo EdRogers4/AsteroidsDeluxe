@@ -85,7 +85,11 @@ public class Asteroid : MonoBehaviour
             }
 
             scriptGameManager.PlaySoundExplosionLarge();
-            scriptGameManager.UpdateScore(20);
+
+            if (collision.gameObject.layer != 7 && collision.gameObject.layer != 9 && collision.gameObject.layer != 10)
+            {
+                scriptGameManager.UpdateScore(20);
+            }
         }
         else if (_size == 1)
         {
@@ -98,12 +102,20 @@ public class Asteroid : MonoBehaviour
             }
             
             scriptGameManager.PlaySoundExplosionMedium();
-            scriptGameManager.UpdateScore(50);
+
+            if (collision.gameObject.layer != 7 && collision.gameObject.layer != 9 && collision.gameObject.layer != 10)
+            {
+                scriptGameManager.UpdateScore(50);
+            }
         }
         else
         {
             scriptGameManager.PlaySoundExplosionSmall();
-            scriptGameManager.UpdateScore(100);
+
+            if (collision.gameObject.layer != 7 && collision.gameObject.layer != 9 && collision.gameObject.layer != 10)
+            {
+                scriptGameManager.UpdateScore(100);
+            }
         }
 
         Instantiate(_particleSmoke, transform.position, transform.rotation);

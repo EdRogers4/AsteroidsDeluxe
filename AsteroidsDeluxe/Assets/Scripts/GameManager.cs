@@ -70,7 +70,61 @@ public class GameManager : MonoBehaviour
         _formatScoreLength = _textScore.text.Length;
         _currentRank = 10;
         _bonus = 10000;
-        int.TryParse(_textHighScore[0].text, out _topScores[0]);
+
+        for (int i = 0; i < _topScores.Length; i++)
+        {
+            Debug.Log((i + 1) + ") | Score: " + PlayerPrefs.GetInt("score" + i) + " | " + "Initials: " + PlayerPrefs.GetString("initials" + i));
+
+            if (PlayerPrefs.GetInt("score" + i) == 0)
+            {
+                PlayerPrefs.SetString("initials" + i, "ABC");
+                
+                switch (i)
+                {
+                    case 0:
+                        PlayerPrefs.SetInt("score" + i, 10000);
+                        break;
+                    case 1:
+                        PlayerPrefs.SetInt("score" + i, 9000);
+                        break;
+                    case 2:
+                        PlayerPrefs.SetInt("score" + i, 8000);
+                        break;
+                    case 3:
+                        PlayerPrefs.SetInt("score" + i, 7000);
+                        break;
+                    case 4:
+                        PlayerPrefs.SetInt("score" + i, 6000);
+                        break;
+                    case 5:
+                        PlayerPrefs.SetInt("score" + i, 5000);
+                        break;
+                    case 6:
+                        PlayerPrefs.SetInt("score" + i, 4000);
+                        break;
+                    case 7:
+                        PlayerPrefs.SetInt("score" + i, 3000);
+                        break;
+                    case 8:
+                        PlayerPrefs.SetInt("score" + i, 2000);
+                        break;
+                    case 9:
+                        PlayerPrefs.SetInt("score" + i, 1000);
+                        break;
+                }
+            }
+
+            if (PlayerPrefs.GetInt("save" + i) > 0)
+            {
+                _textInitials[i].text = PlayerPrefs.GetString("initials" + i);
+                _topScores[i] = PlayerPrefs.GetInt("score" + i);
+                _textHighScore[i].text = "" + _topScores[i];
+                _formatScoreCount = _formatScoreLength - _textHighScore[i].text.Length;
+                FormatScore(_textHighScore[i], _topScores[i]);
+            }
+
+            _textTopScore.text = _textHighScore[0].text;
+        }
     }
 
     public void NextLevel()
@@ -180,6 +234,9 @@ public class GameManager : MonoBehaviour
                 {
                     isRestart = true;
                     _animatorHighScore.SetBool("isRestart", true);
+                    PlayerPrefs.SetInt("score" + _currentRank, _score);
+                    PlayerPrefs.SetString("initials" + _currentRank, _textInput[0].text + _textInput[1].text + _textInput[2].text);
+                    PlayerPrefs.SetInt("save" + _currentRank, 1);
 
                     for (int i = 0; i < _underline.Length; i++)
                     {
@@ -233,7 +290,7 @@ public class GameManager : MonoBehaviour
         _textScore.text = "" + _score;
         _formatScoreCount = _formatScoreLength - _textScore.text.Length;
         Debug.Log("Format score count: " + _formatScoreCount);
-        FormatScore(_textHighScore[_currentRank]);
+        FormatScore(_textHighScore[_currentRank], _score);
         _currentScore.rectTransform.position 
             = new Vector3(_textHighScore[_currentRank].rectTransform.position.x, _textHighScore[_currentRank].rectTransform.position.y);
         _textInitials[_currentRank].text = "   ";
@@ -256,7 +313,7 @@ public class GameManager : MonoBehaviour
         _score += points;
         _textScore.text = "" + _score;
         _formatScoreCount = _formatScoreLength - _textScore.text.Length;
-        FormatScore(_textScore);
+        FormatScore(_textScore, _score);
 
         if (_score >= _bonus)
         {
@@ -276,7 +333,7 @@ public class GameManager : MonoBehaviour
             
             _textTopScore.text = "" + _score;
             _formatScoreCount = _formatScoreLength - _textTopScore.text.Length;
-            FormatScore(_textTopScore);
+            FormatScore(_textTopScore, _score);
         }
 
         if (_score > _topScores[_topScores.Length - 1] && !isHighScoreReached)
@@ -284,14 +341,16 @@ public class GameManager : MonoBehaviour
             isHighScoreReached = true;
         }
 
-        if (_score > _topScores[_currentRank - 1])
+        if (_currentRank > 0)
         {
-            Debug.Log("Current rank:" + _currentRank);
-            _currentRank -= 1;
+            if (_score > _topScores[_currentRank - 1])
+            {
+                _currentRank -= 1;
+            }
         }
     }
 
-    private void FormatScore(Text text)
+    private void FormatScore(Text text, int score)
     {
         text.text = "";
 
@@ -300,7 +359,7 @@ public class GameManager : MonoBehaviour
             text.text += "0";
         }
 
-        text.text += "" + _score;
+        text.text += "" + score;
     }
 
     public IEnumerator SpawnDrone()
