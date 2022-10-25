@@ -35,11 +35,13 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isShieldDeactivating;
     [SerializeField] private bool _isReload;
     [SerializeField] private bool _isBounce;
+    [SerializeField] private bool _isSpawn;
     [SerializeField] private ParticleSystem _particleShield;
     [SerializeField] private ParticleSystem _particleAura;
     [SerializeField] private ParticleSystem _particleExplosion;
     [SerializeField] private ParticleSystem _particleMuzzle;
     [SerializeField] private ParticleSystem[] _particleJet;
+    [SerializeField] private ParticleSystem[] _particleSpawnAura;
     private Rigidbody _rigidBody;
 
     private void Start()
@@ -53,6 +55,7 @@ public class Player : MonoBehaviour
         _renderer.enabled = true;
         _health = 100;
         lives = 2;
+        StartCoroutine(PlaySpawnAura());
     }
 
     private void Update()
@@ -178,6 +181,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    private IEnumerator PlaySpawnAura()
+    {
+        _isSpawn = true;
+        _particleSpawnAura[0].Play();
+        _particleSpawnAura[1].Play();
+        yield return new WaitForSeconds(2.0f);
+        _particleSpawnAura[0].Stop();
+        _particleSpawnAura[1].Stop();
+        _isSpawn = false;
+    }
+
     public IEnumerator BounceOffAsteroid()
     {
         _isBounce = true;
@@ -222,6 +236,7 @@ public class Player : MonoBehaviour
         _healthBar.rectTransform.sizeDelta = new Vector2(((float) _health * 3f), 50f);
         _particleJet[2].Play();
         _particleJet[3].Play();
+        StartCoroutine(PlaySpawnAura());
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -232,7 +247,7 @@ public class Player : MonoBehaviour
             _scriptGameManager.PlaySoundDestroyDeathStarSmall();
         }
 
-        if (_isShieldActive)
+        if (_isShieldActive || _isSpawn)
         {
             StartCoroutine(_scriptCameraShake.Shake(0.1f, 0.1f));
             return;
