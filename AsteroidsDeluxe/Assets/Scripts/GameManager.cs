@@ -234,6 +234,16 @@ public class GameManager : MonoBehaviour
                 {
                     isRestart = true;
                     _animatorHighScore.SetBool("isRestart", true);
+
+
+                    for (int i = 0; i < _topScores.Length ; i++)
+                    {
+                        int.TryParse(_textHighScore[i].text, out _topScores[i]);
+                        PlayerPrefs.SetInt("score" + i, _topScores[i]);
+                        PlayerPrefs.SetString("initials" + i, _textInitials[i].text);
+                        PlayerPrefs.SetInt("save" + i, 1);
+                    }
+
                     PlayerPrefs.SetInt("score" + _currentRank, _score);
                     PlayerPrefs.SetString("initials" + _currentRank, _textInput[0].text + _textInput[1].text + _textInput[2].text);
                     PlayerPrefs.SetInt("save" + _currentRank, 1);
@@ -287,12 +297,20 @@ public class GameManager : MonoBehaviour
 
     public void RecordHighScore()
     {
+        for (int i = 9; i >= _currentRank ; i--)
+        {
+            _textInitials[i].text = "" + PlayerPrefs.GetString("initials" + (i - 1));
+            _topScores[i] = PlayerPrefs.GetInt("score" + (i - 1));
+            _textHighScore[i].text = "" + _topScores[i];
+            _formatScoreCount = _formatScoreLength - _textHighScore[i].text.Length;
+            FormatScore(_textHighScore[i], _topScores[i]);
+        }
+        
         _textScore.text = "" + _score;
         _formatScoreCount = _formatScoreLength - _textScore.text.Length;
         Debug.Log("Format score count: " + _formatScoreCount);
         FormatScore(_textHighScore[_currentRank], _score);
-        _currentScore.rectTransform.position 
-            = new Vector3(_textHighScore[_currentRank].rectTransform.position.x, _textHighScore[_currentRank].rectTransform.position.y);
+        _currentScore.rectTransform.position = new Vector3(_textHighScore[_currentRank].rectTransform.position.x, _textHighScore[_currentRank].rectTransform.position.y);
         _textInitials[_currentRank].text = "   ";
     }
 
