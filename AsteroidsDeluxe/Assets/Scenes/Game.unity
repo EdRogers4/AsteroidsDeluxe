@@ -32662,6 +32662,7 @@ MonoBehaviour:
   listLaser: []
   lives: 2
   _scriptGameManager: {fileID: 1793723051}
+  _scriptInputCheck: {fileID: 1124333075}
   _scriptCameraShake: {fileID: 1793723052}
   _gunBarrel: {fileID: 1222242025}
   _prefabLaser: {fileID: 5613700720782366818, guid: fcca2f6200738ae44b2792d5794f140d, type: 3}
@@ -32711,7 +32712,7 @@ Rigidbody:
   m_GameObject: {fileID: 1124333067}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 1
+  m_Drag: 0.85
   m_AngularDrag: 3
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -32747,6 +32748,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fa84985bd6af0a4ca4f624037d337a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isThrust: 0
+  isTurnLeft: 0
+  isTurnRight: 0
+  isShoot: 0
+  isShield: 0
 --- !u!1 &1147122916
 GameObject:
   m_ObjectHideFlags: 0

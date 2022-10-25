@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public List<Transform> listLaser;
     public int lives;
     [SerializeField] private GameManager _scriptGameManager;
+    [SerializeField] private InputCheck _scriptInputCheck;
     [SerializeField] private CameraShake _scriptCameraShake;
     [SerializeField] private Transform _gunBarrel;
     [SerializeField] private GameObject _prefabLaser;
@@ -65,6 +66,7 @@ public class Player : MonoBehaviour
             if ((Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
             {
                 _isThrust = true;
+                _isBounce = false;
                 _particleJet[0].Play();
                 _particleJet[1].Play();
             }
@@ -237,6 +239,42 @@ public class Player : MonoBehaviour
         _particleJet[2].Play();
         _particleJet[3].Play();
         StartCoroutine(PlaySpawnAura());
+        CheckInput();
+    }
+
+    private void CheckInput()
+    {
+        if (_scriptInputCheck.isThrust)
+        {
+            _isThrust = true;
+            _particleJet[0].Play();
+            _particleJet[1].Play();
+            _isBounce = false;
+        }
+        
+        if (_scriptInputCheck.isTurnLeft)
+        {
+            _isTurnLeft = true;
+        }
+        
+        if (_scriptInputCheck.isTurnRight)
+        {
+            _isTurnRight = true;
+        }
+        
+        if (_scriptInputCheck.isShoot)
+        {
+            _isShoot = true;
+            StartCoroutine(ShootLaser());
+        }
+        
+        if (_scriptInputCheck.isShield)
+        {
+            _isShield = true;
+            _particleShield.Play();
+            _particleAura.Play();
+            _scriptGameManager.PlaySoundShieldOn();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -269,6 +307,10 @@ public class Player : MonoBehaviour
                 break;
             case "Laser":
                 _health -= 20;
+                StartCoroutine(_scriptCameraShake.Shake(0.25f, 0.4f));
+                break;
+            case "Enemy":
+                _health -= 30;
                 StartCoroutine(_scriptCameraShake.Shake(0.25f, 0.4f));
                 break;
         }
