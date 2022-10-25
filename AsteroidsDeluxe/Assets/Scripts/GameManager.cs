@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
             }
 
             _textTopScore.text = _textHighScore[0].text;
+            _textTopInitials.text = PlayerPrefs.GetString("initials0");
         }
     }
 
