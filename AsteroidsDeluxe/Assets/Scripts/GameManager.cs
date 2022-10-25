@@ -73,45 +73,10 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < _topScores.Length; i++)
         {
-            Debug.Log((i + 1) + ") | Score: " + PlayerPrefs.GetInt("score" + i) + " | " + "Initials: " + PlayerPrefs.GetString("initials" + i));
-
             if (PlayerPrefs.GetInt("score" + i) == 0)
             {
                 PlayerPrefs.SetString("initials" + i, "ABC");
-                
-                switch (i)
-                {
-                    case 0:
-                        PlayerPrefs.SetInt("score" + i, 10000);
-                        break;
-                    case 1:
-                        PlayerPrefs.SetInt("score" + i, 9000);
-                        break;
-                    case 2:
-                        PlayerPrefs.SetInt("score" + i, 8000);
-                        break;
-                    case 3:
-                        PlayerPrefs.SetInt("score" + i, 7000);
-                        break;
-                    case 4:
-                        PlayerPrefs.SetInt("score" + i, 6000);
-                        break;
-                    case 5:
-                        PlayerPrefs.SetInt("score" + i, 5000);
-                        break;
-                    case 6:
-                        PlayerPrefs.SetInt("score" + i, 4000);
-                        break;
-                    case 7:
-                        PlayerPrefs.SetInt("score" + i, 3000);
-                        break;
-                    case 8:
-                        PlayerPrefs.SetInt("score" + i, 2000);
-                        break;
-                    case 9:
-                        PlayerPrefs.SetInt("score" + i, 1000);
-                        break;
-                }
+                PlayerPrefs.SetInt("score" + i, _topScores[i]);
             }
 
             if (PlayerPrefs.GetInt("save" + i) > 0)
@@ -223,7 +188,7 @@ public class GameManager : MonoBehaviour
 
         if (isHighScoreUI && isHighScoreReached)
         {
-            if (Input.GetKeyDown(KeyCode.Return) && _currentInitial < 3)
+            if ((Input.GetKeyDown(KeyCode.Return) || (Input.GetMouseButtonDown(0))) || (Input.GetKeyDown(KeyCode.Space)) && _currentInitial < 3)
             {
                 _currentInitial += 1;
                 _currentInput = 1;
